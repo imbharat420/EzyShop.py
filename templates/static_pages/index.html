@@ -1,0 +1,290 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+
+{% block title %} | Welcome {% endblock %}
+{% block content %}
+
+    <main class="main-wrapper">
+
+        <!-- ...:::Start Catagories Section:::... -->
+        <div class="catagories-section section-gap-top-25">
+            <div class="container">
+                <div class="catagories-area">
+                    <div class="catagories-nav-2">
+                        <!-- Slider main container -->
+                        <div class="swiper">
+                            <!-- Additional required wrapper -->
+                            <div class="swiper-wrapper">
+                                <!-- Slides -->
+                                {% for category in links %}
+                                    <div class="swiper-slide">
+                                        <a href="{{category.get_url }}" class="btn">{{category.category_name}}</a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ...:::End Catagories Section:::... -->
+
+        <!-- ...:::Start Hero Slider Section:::... -->
+        <div class="hero-section section-gap-top-25">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Start Hero Area -->
+                        <div class="hero-area hero-area--style-2 hero-slider-active">
+                            <!-- Slider main container -->
+                            <div class="swiper">
+                                <!-- Additional required wrapper -->
+                                <div class="swiper-wrapper">
+                                    <!-- Slides -->
+                                    <div class="swiper-slide">
+                                        <div class="hero-singel-slide ">
+                                            <div class="hero-bg">
+                                                <img width="388" height="130" class="img-full" src="{% static 'assets/images/hero/bg/hero-2-bg-1.jpg' %}" alt="">
+                                            </div>
+                                            <div class="inner-wrapper">
+                                                <div class="content">
+                                                    <h2 class="title">Office Decoration</h2>
+                                                    <h3 class="sub-title">30% Off</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Slides -->
+                                    <div class="swiper-slide">
+                                        <div class="hero-singel-slide ">
+                                            <div class="hero-bg">
+                                                <img width="388" height="130" class="img-full" src="{% static 'assets/images/hero/bg/hero-2-bg-1.jpg' %}" alt="">
+                                            </div>
+                                            <div class="inner-wrapper">
+                                                <div class="content">
+                                                    <h2 class="title">Office Decoration</h2>
+                                                    <h3 class="sub-title">40% Off</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Slides -->
+                                    <div class="swiper-slide">
+                                        <div class="hero-singel-slide ">
+                                            <div class="hero-bg">
+                                                <img width="388" height="130" class="img-full" src="{% static 'assets/images/hero/bg/hero-2-bg-1.jpg' %}" alt="">
+                                            </div>
+                                            <div class="inner-wrapper">
+                                                <div class="content">
+                                                    <h2 class="title">Office Decoration</h2>
+                                                    <h3 class="sub-title">60% Off</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- End Hero Area -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ...:::End Hero Slider Section:::... -->
+
+        <!-- ...:::Start Catagories - 3 Section:::... -->
+        <div class="catagories-section section-gap-top-50">
+            <div class="container">
+                <div class="catagories-area">
+                    <div class="catagories-nav-3">
+                        {% for category in links %}
+                        <a href="{{ category.get_url }}" class="btn"><img width="33" height="21" src="{{ category.cat_image.url }}" alt=""></a>
+                        {% endfor %}
+                        <!-- <a href="{% url 'shop' %}" class="btn"><img width="25" height="25" src="{% static 'assets/images/icons/filter.svg' %}" alt=""></a> -->
+                    </div>
+                </div>
+
+                <div class="title-content">
+                    <h2 class="title">Best Seller</h2>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+                <div class="catagories-wrapper">
+                    <div class="catagories-wrapper-content">
+                        <!-- Start Product Single Item -->
+                        <div class="single-product-item product-item--style-2">
+                            <div class="image product-item--bg-neon-carrot">
+                                <a href="{% url 'product' %}">
+                                    <img width="58" height="69" class="img-fluid" src="{% static 'assets/images/product/normal/product-2-img-1.png' %}" alt="">
+                                </a>
+                                <a href="{% url 'wishlist' %}" aria-label="Wishlist" class="btn btn--size-33-33 btn--center btn--round btn--color-radical-red btn--bg-white btn--box-shadow"><i class="icon icon-carce-heart"></i></a>
+                            </div>
+                            <div class="content">
+                                <div class="content--left">
+                                    <a href="{% url 'product' %}" class="title">Tanin Chair</a>
+                                    <span class="price">$500.00</span>
+                                </div>
+                                <div class="content--right">
+                                    <span class="review-star-text"><i class="icon-carce-ios-star"></i> 4.5</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ENd Product Single Item -->
+                    </div>
+                </div>
+
+                <div class="title-content">
+                    <h2 class="title">New Arrival</h2>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+                <div class="catagories-wrapper">
+                    <div class="catagories-wrapper-content">
+
+                        {% for product in products %}
+                        <!-- Start Product Single Item -->
+                        <div class="single-product-item product-item--style-2">
+                            <div class="image product-item--bg-neon-carrot">
+                                <a href="{{ product.get_url }}" >
+                                    <!-- {% static 'assets/images/product/normal/product-2-img-1.png' %} -->
+                                    <img width="58" height="69" class="img-fluid" src="{{ product.images.url }}" alt="">
+                                </a>
+                                <a href="{% url 'wishlist' %}" aria-label="Wishlist" class="btn btn--size-33-33 btn--center btn--round btn--color-radical-red btn--bg-white btn--box-shadow"><i class="icon icon-carce-heart"></i></a>
+                            </div>
+                            <div class="content">
+                                <div class="content--left">
+                                    <a href="{{ product.get_url }}" class="title">{{ product.product_name }}</a>
+                                    <span class="price">${{ product.price }}</span>
+                                </div>
+                                <div class="content--right">
+                                    <span class="review-star-text"><i class="icon-carce-ios-star"></i> 4.5</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ENd Product Single Item -->
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- ...:::Start Catagories - 3 Section:::... -->
+
+
+        <footer class="footer-section"></footer>
+    </main>
+
+
+    <script>
+        function filterFunction(that, event) {
+            let container, input, filter, li, input_val;
+            container = $(that).closest(".searchable");
+            input_val = container.find("input").val().toUpperCase();
+            if (["ArrowDown", "ArrowUp", "Enter"].indexOf(event.key) != -1) {
+                keyControl(event, container);
+            } else {
+                li = container.find("ul li");
+                li.each(function(i, obj) {
+                    if ($(this).text().toUpperCase().indexOf(input_val) > -1) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+                container.find("ul li").removeClass("selected");
+                setTimeout(function() {
+                    container.find("ul li:visible").first().addClass("selected");
+                }, 100);
+            }
+        }
+
+        function keyControl(e, container) {
+            if (e.key == "ArrowDown") {
+                if (container.find("ul li").hasClass("selected")) {
+                    if (
+                        container
+                        .find("ul li:visible")
+                        .index(container.find("ul li.selected")) +
+                        1 <
+                        container.find("ul li:visible").length
+                    ) {
+                        container
+                            .find("ul li.selected")
+                            .removeClass("selected")
+                            .nextAll()
+                            .not('[style*="display: none"]')
+                            .first()
+                            .addClass("selected");
+                    }
+                } else {
+                    container.find("ul li:first-child").addClass("selected");
+                }
+            } else if (e.key == "ArrowUp") {
+                if (
+                    container.find("ul li:visible").index(container.find("ul li.selected")) >
+                    0
+                ) {
+                    container
+                        .find("ul li.selected")
+                        .removeClass("selected")
+                        .prevAll()
+                        .not('[style*="display: none"]')
+                        .first()
+                        .addClass("selected");
+                }
+            } else if (e.key == "Enter") {
+                container.find("input").val(container.find("ul li.selected").text()).blur();
+                onSelect(container.find("ul li.selected").text());
+            }
+        }
+
+        function onSelect(val) {}
+        $(".searchable input").focus(function() {
+            $(this).closest(".searchable").find("ul").show();
+            $(this).closest(".searchable").find("ul li").show();
+            $('.submit__btn').css({
+                "display": "block"
+            })
+            $('.close__btn').css({
+                "display": "block"
+            })
+            $('.search__btn').css({
+                'display': "none"
+            })
+        });
+        $(".searchable input").blur(function() {
+            let that = this;
+            setTimeout(function() {
+                $(that).closest(".searchable").find("ul").hide();
+                $('.search__btn').css({
+                    'display': "block"
+                })
+                $('.submit__btn').css({
+                    "display": "none"
+                })
+                $('.close__btn').css({
+                    "display": "none"
+                })
+            }, 300);
+        });
+        $('.search__btn').on("click", function() {
+            $(this).closest(".searchable").find("input").val($(this).text()).blur();
+            onSelect($(this).text());
+        });
+        $(document).on("click", ".searchable ul li", function() {
+            $(this).closest(".searchable").find("input").val($(this).text()).blur();
+            onSelect($(this).text());
+        });
+        $(".searchable ul li").hover(function() {
+            $(this).closest(".searchable").find("ul li.selected").removeClass("selected");
+            $(this).addClass("selected");
+        });
+        $('.close__btn').on('click', function() {
+            $('.searchable').find("input").val($(this).text()).blur();
+            $(this).css({
+                "display": "none"
+            })
+        })
+    </script>
+
+{% endblock %}

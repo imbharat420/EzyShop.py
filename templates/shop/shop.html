@@ -1,0 +1,280 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+
+{% block title %} | Welcome {% endblock %}
+{% block content %}
+
+
+    <main class="main-wrapper">
+
+
+
+        <!-- ...:::Start Catagories - 3 Section:::... -->
+        <div class="catagories-section section-gap-top-25">
+            <div class="container">
+                <div class="section-content">
+                    <h1 class="title">Get Start <br> <span>With Awesome Product</span></h1>
+                </div>
+                <div class="catagories-nav-2 section-gap-top-25">
+                    <!-- Slider main container -->
+                    <div class="swiper">
+                        <!-- Additional required wrapper -->
+                        <div class="swiper-wrapper">
+                            <!-- Slides -->
+                            {% if categories.count  > 0 %}
+                                {% for category in categories %}
+                                    <div class="swiper-slide">
+                                        <a href="{{category.get_url}}" class="btn">{{category.category_name}}</a>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+                <div class="catagories-wrapper section-gap-top-25">
+                    <div class="catagories-wrapper-content">
+
+                        {% for product in products %}
+                        <!-- Start Product Single Item -->
+                        <div class="single-product-item product-item--style-3">
+                            <div class="image">
+                                <a href="{{ product.get_url }}">
+                                    <img width="140" height="110" class="img-fluid" src="{{ product.images.url }}" alt="image">
+                                </a>
+                                <a href="{% url 'wishlist'%}" aria-label="Wishlist" class="btn btn--size-33-33 btn--center btn--round btn--color-radical-red btn--bg-white btn--box-shadow"><i class="icon icon-carce-heart"></i></a>
+                            </div>
+                            <div class="content">
+                                <div class="content--left">
+                                    <a href="{{ product.get_url }}" class="title">{{product.product_name }}</a>
+                                    <span class="price">$500.00</span>
+                                </div>
+                                <div class="content--right">
+                                    <span class="review-star-text">4.5</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ENd Product Single Item -->
+                        {% endfor %}
+         
+                    </div>
+                    <div class="banner-bg my-30">
+                        <div class="image">
+                            <a href="shop-1.html" class=""><img class="img-full" width="388" height="130" src="{% static 'assets/images/banner/banner-1.png' %}" alt="image"></a>
+                        </div>
+                        <div class="content">
+                            <h2 class="title">Luxury Decoration <br> <span>30% Off</span></h2>
+                            <a href="shop-1.html">More</a>
+                        </div>
+                    </div>
+                    <div class="catagories-wrapper-content">
+
+                        <!-- Start Product Single Item -->
+                        <div class="single-product-item product-item--style-3">
+                            <div class="image">
+                                <a href="single-product.html">
+                                    <img width="140" height="110" class="img-fluid" src="assets/images/product/normal/product-3-img-5.png" alt="image">
+                                </a>
+                                <a href="wishlist.html" aria-label="Wishlist" class="btn btn--size-33-33 btn--center btn--round btn--color-radical-red btn--bg-white btn--box-shadow"><i class="icon icon-carce-heart"></i></a>
+                            </div>
+                            <div class="content">
+                                <div class="content--left">
+                                    <a href="single-product.html" class="title">Dmin Table</a>
+                                    <span class="price">$500.00</span>
+                                </div>
+                                <div class="content--right">
+                                    <span class="review-star-text">4.5</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ENd Product Single Item -->
+                        <!-- Start Product Single Item -->
+                        <div class="single-product-item product-item--style-3">
+                            <div class="image">
+                                <a href="single-product.html">
+                                    <img width="140" height="110" class="img-fluid" src="assets/images/product/normal/product-3-img-2.png" alt="image">
+                                </a>
+                                <a href="wishlist.html" aria-label="Wishlist" class="btn btn--size-33-33 btn--center btn--round btn--color-radical-red btn--bg-white btn--box-shadow"><i class="icon icon-carce-heart"></i></a>
+                            </div>
+                            <div class="content">
+                                <div class="content--left">
+                                    <a href="single-product.html" class="title">Hotil Office</a>
+                                    <span class="price">$500.00</span>
+                                </div>
+                                <div class="content--right">
+                                    <span class="review-star-text">4.5</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ENd Product Single Item -->
+                        <!-- Start Product Single Item -->
+                        <div class="single-product-item product-item--style-3">
+                            <div class="image">
+                                <a href="single-product.html">
+                                    <img width="120" height="96" class="img-fluid" src="assets/images/product/normal/product-3-img-6.png" alt="image">
+                                </a>
+                                <a href="wishlist.html" aria-label="Wishlist" class="btn btn--size-33-33 btn--center btn--round btn--color-radical-red btn--bg-white btn--box-shadow"><i class="icon icon-carce-heart"></i></a>
+                            </div>
+                            <div class="content">
+                                <div class="content--left">
+                                    <a href="single-product.html" class="title">Drawing room</a>
+                                    <span class="price">$500.00</span>
+                                </div>
+                                <div class="content--right">
+                                    <span class="review-star-text">4.5</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ENd Product Single Item -->
+
+                    </div>
+                    <button class="load-more-btn">load more</button>
+                </div>
+            </div>
+        </div>
+        <!-- ...:::Start Catagories - 3 Section:::... -->
+
+        <!-- ...:::Start User Event Section:::... -->
+        <div class="user-event-section">
+            <!-- Start User Event Area -->
+            <div class="col pos-relative">
+
+                <div class="user-event-area">
+                    <div class="user-event user-event--left">
+                        <a area-label="event link icon" href="index.html" class="event-btn-link"><i
+                        class="icon icon-carce-home"></i></a>
+                        <a area-label="wishlist icon" href="wishlist.html" class="event-btn-link"><i
+                        class="icon icon-carce-heart"></i></a>
+                    </div>
+                    <div class="user-event user-event--center">
+                        <a area-label="cart icon" href="cart.html" class="event-btn-link"><i
+                        class="icon icon-carce-cart"></i></a>
+                    </div>
+                    <div class="user-event user-event--right">
+                        <a area-label="order icon" href="order.html" class="event-btn-link"><i
+                        class="icon icon-carce-compare"></i></a>
+                        <a area-label="chat icon" href="chat.html" class="event-btn-link"><i
+                        class="icon icon-carce-bubbles2"></i></a>
+                    </div>
+                </div>
+            </div>
+            <!-- End User Event Area -->
+        </div>
+        <!-- ...:::End User Event Section:::... -->
+
+        <footer class="footer-section"></footer>
+    </main>
+{% endblock %}
+
+    <script>
+        function filterFunction(that, event) {
+            let container, input, filter, li, input_val;
+            container = $(that).closest(".searchable");
+            input_val = container.find("input").val().toUpperCase();
+            if (["ArrowDown", "ArrowUp", "Enter"].indexOf(event.key) != -1) {
+                keyControl(event, container);
+            } else {
+                li = container.find("ul li");
+                li.each(function(i, obj) {
+                    if ($(this).text().toUpperCase().indexOf(input_val) > -1) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+                container.find("ul li").removeClass("selected");
+                setTimeout(function() {
+                    container.find("ul li:visible").first().addClass("selected");
+                }, 100);
+            }
+        }
+
+        function keyControl(e, container) {
+            if (e.key == "ArrowDown") {
+                if (container.find("ul li").hasClass("selected")) {
+                    if (
+                        container
+                        .find("ul li:visible")
+                        .index(container.find("ul li.selected")) +
+                        1 <
+                        container.find("ul li:visible").length
+                    ) {
+                        container
+                            .find("ul li.selected")
+                            .removeClass("selected")
+                            .nextAll()
+                            .not('[style*="display: none"]')
+                            .first()
+                            .addClass("selected");
+                    }
+                } else {
+                    container.find("ul li:first-child").addClass("selected");
+                }
+            } else if (e.key == "ArrowUp") {
+                if (
+                    container.find("ul li:visible").index(container.find("ul li.selected")) >
+                    0
+                ) {
+                    container
+                        .find("ul li.selected")
+                        .removeClass("selected")
+                        .prevAll()
+                        .not('[style*="display: none"]')
+                        .first()
+                        .addClass("selected");
+                }
+            } else if (e.key == "Enter") {
+                container.find("input").val(container.find("ul li.selected").text()).blur();
+                onSelect(container.find("ul li.selected").text());
+            }
+        }
+
+        function onSelect(val) {}
+        $(".searchable input").focus(function() {
+            $(this).closest(".searchable").find("ul").show();
+            $(this).closest(".searchable").find("ul li").show();
+            $('.submit__btn').css({
+                "display": "block"
+            })
+            $('.close__btn').css({
+                "display": "block"
+            })
+            $('.search__btn').css({
+                'display': "none"
+            })
+        });
+        $(".searchable input").blur(function() {
+            let that = this;
+            setTimeout(function() {
+                $(that).closest(".searchable").find("ul").hide();
+                $('.search__btn').css({
+                    'display': "block"
+                })
+                $('.submit__btn').css({
+                    "display": "none"
+                })
+                $('.close__btn').css({
+                    "display": "none"
+                })
+            }, 300);
+        });
+        $('.search__btn').on("click", function() {
+            $(this).closest(".searchable").find("input").val($(this).text()).blur();
+            onSelect($(this).text());
+        });
+        $(document).on("click", ".searchable ul li", function() {
+            $(this).closest(".searchable").find("input").val($(this).text()).blur();
+            onSelect($(this).text());
+        });
+        $(".searchable ul li").hover(function() {
+            $(this).closest(".searchable").find("ul li.selected").removeClass("selected");
+            $(this).addClass("selected");
+        });
+        $('.close__btn').on('click', function() {
+            $('.searchable').find("input").val($(this).text()).blur();
+            $(this).css({
+                "display": "none"
+            })
+        })
+    </script>

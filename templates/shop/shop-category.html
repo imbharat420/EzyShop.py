@@ -1,0 +1,446 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+
+{% block title %} | Welcome {% endblock %}
+{% block content %}
+    <main class="main-wrapper">
+
+        <!-- ...:::Start Search & Filter Section:::... -->
+        <div class="search-n-filter-section section-gap-top-25">
+            <div class="container">
+                <!-- Start Search & Filter Area -->
+                <div class="search-n-filter-area">
+                    <div class="search-box">
+                        <a href="{% url 'home'}" aria-label="Filter Icon" class="filter_btn btn--radius btn--bg-white btn--box-shadow btn--size-40-40 filter-back-btn">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="5.973" height="10.449" viewBox="0 0 5.973 10.449">
+                                <path id="Icon_ionic-ios-arrow-back" data-name="Icon ionic-ios-arrow-back" d="M13.051,11.417,17,7.466a.747.747,0,0,0-1.058-1.054l-4.479,4.476a.745.745,0,0,0-.022,1.03l4.5,4.507A.747.747,0,1,0,17,15.37Z" transform="translate(-11.251 -6.194)" />
+                            </svg>
+                        </a>
+                        <div class="searchable select">
+                            <form method="GET" action="{% url 'search' %}"> 
+                                <!-- onkeyup="filterFunction(this,event)" -->
+                            <input type="text" placeholder="Search..." name="keyword"  required>
+                            <button type="submit" class="btn search__btn" aria-label="Search Icon" type="submit">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12.003" viewBox="0 0 12 12.003">
+                                    <path id="Icon_ionic-ios-search" data-name="Icon ionic-ios-search" d="M13.859,13.131,10.522,9.762a4.756,4.756,0,1,0-.722.731l3.316,3.347a.514.514,0,0,0,.725.019A.517.517,0,0,0,13.859,13.131Zm-7.075-2.6a3.756,3.756,0,1,1,2.656-1.1A3.732,3.732,0,0,1,6.784,10.534Z" transform="translate(-2 -1.997)" fill="#171717" />
+                                </svg>
+                            </button>
+                            </form>
+                            <button class="btn submit__btn" aria-label="Search Icon" type="submit">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="12" viewBox="0 0 18 12">
+                                    <path id="Icon_ionic-ios-arrow-round-forward" data-name="Icon ionic-ios-arrow-round-forward" d="M19.354,11.481a.816.816,0,0,0-.006,1.15l3.8,3.806H8.682a.812.812,0,0,0,0,1.625H23.143l-3.8,3.806a.822.822,0,0,0,.006,1.15.81.81,0,0,0,1.144-.006l5.152-5.187h0a.912.912,0,0,0,.169-.256.775.775,0,0,0,.063-.312.814.814,0,0,0-.231-.569L20.492,11.5A.8.8,0,0,0,19.354,11.481Z" transform="translate(-7.875 -11.252)" fill="#aaa" />
+                                </svg>
+                            </button>
+
+                            <button class="btn close__btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
+                                    <path id="Icon_metro-cancel" data-name="Icon metro-cancel" d="M6.857.643a6,6,0,1,0,6,6,6,6,0,0,0-6-6Zm0,10.875a4.875,4.875,0,1,1,4.875-4.875A4.875,4.875,0,0,1,6.857,11.518ZM8.732,3.643,6.857,5.518,4.982,3.643,3.857,4.768,5.732,6.643,3.857,8.518,4.982,9.643,6.857,7.768,8.732,9.643,9.857,8.518,7.982,6.643,9.857,4.768Z" transform="translate(-0.857 -0.643)" fill="#aaa" />
+                                </svg>
+                            </button>
+
+                        </div>
+
+                        <button id="filter-trigger" aria-label="Filter Icon" class="filter_btn btn--radius btn--radical-red btn--color-white btn--box-shadow btn--size-40-40 btn--center btn--font-size-22"><i
+								class="icon icon-carce-filter"></i></button>
+                    </div>
+                </div>
+                <!-- End Search & Filter Area -->
+
+                <div class="shop-filter" id="shop-filter-menu">
+                    <div class="container">
+                        <div class="row">
+                            <form action="" method="GET">
+                            <div class="col-12">
+                                <div class="shop-filter-block mt-0">
+                                    <h4 class="shop-filter-block__title">Price</h4>
+                                    <div class="shop-filter-block__content">
+                                        <div class="widget-price-range">
+                                            <input type="text" id="price-range-slider" value="10">
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="product-variable-lists">
+                                    <li class="list-item">
+                                        <div class="left">Size</div>
+                                        <div class="right">
+                                            <ul class="size-chart inner-child-item">
+                                                <li>
+                                                    <label for="samll">
+                                                        <input type="radio" name="size" value="s"  id="samll" checked="">
+                                                        <span class="size-text">S</span>
+                                                    </label>
+                                                </li>
+                                                <!-- <li>
+                                                    <label for="medium">
+                                                        <input type="radio" name="size" id="medium">
+                                                        <span class="size-text">M</span>
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="large">
+                                                        <input type="radio" name="size" id="large">
+                                                        <span class="size-text">L</span>
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="xlarge">
+                                                        <input type="radio" name="size" id="xlarge">
+                                                        <span class="size-text">XL</span>
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="xxlarge">
+                                                        <input type="radio" name="size" id="xxlarge">
+                                                        <span class="size-text">XXL</span>
+                                                    </label>
+                                                </li> -->
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="list-item">
+                                        <div class="left">Color</div>
+                                        <div class="right">
+                                            <ul class="color-chart inner-child-item">
+                                                <li>
+                                                    <label for="blue">
+                                                        <input type="radio" name="color" value="blue" id="blue">
+                                                        <span class="color-box color-box--blue"></span>
+                                                    </label>
+                                                </li>
+                                                <!-- <li>
+                                                    <label for="orange">
+                                                        <input type="radio" name="color" id="orange" checked="">
+                                                        <span class="color-box color-box--orange"></span>
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="violet">
+                                                        <input type="radio" name="color" id="violet">
+                                                        <span class="color-box color-box--violet"></span>
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="pink">
+                                                        <input type="radio" name="color" id="pink">
+                                                        <span class="color-box color-box--pink"></span>
+                                                    </label>
+                                                </li> -->
+                                            </ul>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                                <!-- <div class="shop-filter-block">
+                                    <h4 class="shop-filter-block__title">Brand</h4>
+                                    <div class="shop-filter-block__content">
+                                        <ul class="shop-filter-block__brand">
+                                            <li><button>HasThemes</button></li>
+                                            <li><button class="active">HasTech</button></li>
+                                            <li><button>Bootxperts</button></li>
+                                            <li><button>Codecarnival</button></li>
+                                        </ul>
+                                    </div>
+                                </div> -->
+                                <div class="shop-filter-block">
+                                    <button class="apply-btn" type="submit">APPLY</button>
+                                    <a class="cancel-btn" id="filter-close" onclick="javascript:void(0)">CANCEL</a>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ...:::End Search & Filter Section:::... -->
+
+        <!-- ...:::Start Catagories - 1 Section:::... -->
+        <div class="catagories-section section-gap-top-50">
+            <div class="container">
+                <div class="catagories-area">
+                    <div class="catagories-nav-1 catagories-nav-modyfied">
+                        <!-- Slider main container -->
+                        <div class="swiper">
+                            <!-- Additional required wrapper -->
+                            <div class="swiper-wrapper">
+                                {% for category in categories %}
+                                    <!-- Slides -->
+                                    <div class="swiper-slide">
+                                        <a href="{{category.get_url}}" class="btn">
+                                            <img width="24" height="13" src="{{category.cat_image.url}}" alt="image">
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                                <!-- Slides -->
+                                <!-- <div class="swiper-slide">
+                                    <a href="single-product.html" class="btn">All</a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <a href="single-product.html" class="btn">
+                                        <img width="24" height="13" src="assets/images/catagories/shoe.png" alt="image">
+                                    </a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <a href="single-product.html" class="btn">
+                                        <img width="22" height="20" src="assets/images/catagories/casual-t-shirt.png" alt="image">
+                                    </a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <a href="single-product.html" class="btn">
+                                        <img width="16" height="20" src="assets/images/catagories/strapless.png" alt="image">
+                                    </a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <a href="single-product.html" class="btn">
+                                        <img width="9" height="20" src="assets/images/catagories/trousers.png" alt="image">
+                                    </a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <a href="single-product.html" class="btn">
+                                        <img width="17" height="20" src="assets/images/catagories/bag-pack.png" alt="image">
+                                    </a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <a href="single-product.html" class="btn">
+                                        <img width="22" height="20" src="assets/images/catagories/casual-t-shirt.png" alt="image">
+                                    </a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <a href="single-product.html" class="btn">
+                                        <img width="24" height="13" src="assets/images/catagories/shoe.png" alt="image">
+                                    </a>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if products %}
+                <div class="title-content">
+                    <h2 class="title">All Product</h2>
+                    <button aria-label="Short by" class="short-btn">Short by <span class="icon"><i
+								class="icon icon-carce-arrow_drop_down_circle"></i></span></button>
+                </div>
+                <div class="product-wrapper">
+                    <div class="product-wrapper-content--4">
+                        {% for product in products %}
+                        <!-- Start Product Single Item -->
+                        <div id="single-product-item" class="single-product-item product-item--style-4">
+                            <a aria-label="Product Image" href="" class="image">
+                                <img width="90" height="90" class="img-fluid" src="{{product.images.url}}" alt="image">
+                            </a>
+                            <div class="content">
+                                <div class="content--left">
+                                    <a href="{{ product.get_url }}" class="title">{{product.product_name}}</a>
+                                    <ul class="review-star">
+                                        <li class="items fill"><i class="icon icon-carce-star-full"></i></li>
+                                        <li class="items fill"><i class="icon icon-carce-star-full"></i></li>
+                                        <li class="items fill"><i class="icon icon-carce-star-full"></i></li>
+                                        <li class="items fill"><i class="icon icon-carce-star-full"></i></li>
+                                        <li class="items fill"><i class="icon icon-carce-star-full"></i></li>
+                                    </ul>
+                                    <span class="price">${{product.price}}</span>
+                                </div>
+                                <div class="content--right">
+                                    <a href="{% url 'wishlist' %}" aria-label="Wishlist" class="btn btn--size-33-33 btn--center btn--round btn--color-radical-red btn--bg-white btn--box-shadow"><i
+											class="icon icon-carce-heart"></i></a>
+                                </div>
+                            </div>
+                            <a href="{% url 'add_cart' product.id %}" aria-label="Cart" class="cart-link"><i
+									class="icon icon-carce-cart"></i></a>
+                        </div>
+                        {% endfor %}
+                        <!-- ENd Product Single Item -->
+                    </div>
+                    <!-- <button class="load-more-btn">load more</button> -->
+                </div>
+                {% else %}
+                    <!-- <div class="title-content"> -->
+                        <div class="" style="display: flex;justify-content: center;flex-direction: column;">
+
+                            <h2 class="title" style="margin-bottom: 20px;text-align: center;">No Product Found</h2>
+                            <a   href="{% url 'home' %}" class="load-more-btn">Continue Shopping</a>
+                        </div>
+                    <!-- </div> -->
+                {% endif %}
+            </div>
+        </div>
+        <!-- ...:::Start Catagories - 1 Section:::... -->
+
+        <div class="short-section">
+            <div class="container">
+                <div class="short-wrapper">
+                    <form action="{% url 'search' %}" method="GET">
+                        <span class="title">Short By</span>
+                        <ul class="short-select-list">
+                            <li class="list-item">
+                                <label for="sort-1">
+                                    Recent
+                                    <input type="radio" name="sort" id="sort-1" value="recent" checked>
+                                    <span class="sort-radio-btn"></span>
+                                </label>
+                            </li>
+                            <li class="list-item">
+                                <label for="sort-2">
+                                    Most expensive
+                                    <input type="radio" name="sort" id="sort-2" value="expensive">
+                                    <span class="sort-radio-btn"></span>
+                                </label>
+                            </li>
+                            <li class="list-item">
+                                <label for="sort-3">
+                                    Cheapest
+                                    <input type="radio" name="sort" id="sort-3" value="cheapest">
+                                    <span class="sort-radio-btn"></span>
+                                </label>
+                            </li>
+                            <li class="list-item">
+                                <label for="sort-4">
+                                    Recomended
+                                    <input type="radio" name="sort" id="sort-4" value="recomended">
+                                    <span class="sort-radio-btn"></span>
+                                </label>
+                            </li>
+                        </ul>
+
+                        <div class="short-btn-group">
+                            <button class="btn btn-cancel">Cancel</button>
+                            <button type="submit" class="btn btn-apply">Apply</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+      
+
+        <footer class="footer-section"></footer>
+    </main>
+
+
+{% endblock %}
+    <script>
+        function filterFunction(that, event) {
+            let container, input, filter, li, input_val;
+            container = $(that).closest(".searchable");
+            input_val = container.find("input").val().toUpperCase();
+            if (["ArrowDown", "ArrowUp", "Enter"].indexOf(event.key) != -1) {
+                keyControl(event, container);
+            } else {
+                li = container.find("ul li");
+                li.each(function(i, obj) {
+                    if ($(this).text().toUpperCase().indexOf(input_val) > -1) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+                container.find("ul li").removeClass("selected");
+                setTimeout(function() {
+                    container.find("ul li:visible").first().addClass("selected");
+                }, 100);
+            }
+        }
+
+        function keyControl(e, container) {
+            if (e.key == "ArrowDown") {
+                if (container.find("ul li").hasClass("selected")) {
+                    if (
+                        container
+                        .find("ul li:visible")
+                        .index(container.find("ul li.selected")) +
+                        1 <
+                        container.find("ul li:visible").length
+                    ) {
+                        container
+                            .find("ul li.selected")
+                            .removeClass("selected")
+                            .nextAll()
+                            .not('[style*="display: none"]')
+                            .first()
+                            .addClass("selected");
+                    }
+                } else {
+                    container.find("ul li:first-child").addClass("selected");
+                }
+            } else if (e.key == "ArrowUp") {
+                if (
+                    container.find("ul li:visible").index(container.find("ul li.selected")) >
+                    0
+                ) {
+                    container
+                        .find("ul li.selected")
+                        .removeClass("selected")
+                        .prevAll()
+                        .not('[style*="display: none"]')
+                        .first()
+                        .addClass("selected");
+                }
+            } else if (e.key == "Enter") {
+                container.find("input").val(container.find("ul li.selected").text()).blur();
+                onSelect(container.find("ul li.selected").text());
+            }
+        }
+
+        function onSelect(val) {}
+        $(".searchable input").focus(function() {
+            $(this).closest(".searchable").find("ul").show();
+            $(this).closest(".searchable").find("ul li").show();
+            $('.submit__btn').css({
+                "display": "block"
+            })
+            $('.close__btn').css({
+                "display": "block"
+            })
+            $('.search__btn').css({
+                'display': "none"
+            })
+        });
+        $(".searchable input").blur(function() {
+            let that = this;
+            setTimeout(function() {
+                $(that).closest(".searchable").find("ul").hide();
+                $('.search__btn').css({
+                    'display': "block"
+                })
+                $('.submit__btn').css({
+                    "display": "none"
+                })
+                $('.close__btn').css({
+                    "display": "none"
+                })
+            }, 300);
+        });
+        $('.search__btn').on("click", function() {
+            $(this).closest(".searchable").find("input").val($(this).text()).blur();
+            onSelect($(this).text());
+        });
+        $(document).on("click", ".searchable ul li", function() {
+            $(this).closest(".searchable").find("input").val($(this).text()).blur();
+            onSelect($(this).text());
+        });
+        $(".searchable ul li").hover(function() {
+            $(this).closest(".searchable").find("ul li.selected").removeClass("selected");
+            $(this).addClass("selected");
+        });
+        $('.close__btn').on('click', function() {
+            $('.searchable').find("input").val($(this).text()).blur();
+            $(this).css({
+                "display": "none"
+            })
+        })
+    </script>
+
+    <script>
+        window.addEventListener("load", function() {
+            document.querySelector("#single-product-item").classList.add("active");
+        });
+        setTimeout(() => {
+            document.querySelector("#single-product-item").classList.remove("active");
+        }, 1000);
+        document.querySelector('.btn-cancel').addEventListener('click', function() {
+            document.querySelector('.short-section').style.display = 'none'
+        })
+    </script>
+

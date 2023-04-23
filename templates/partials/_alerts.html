@@ -1,0 +1,48 @@
+{% if messages %}
+<div class="alert-container" style="z-index: 999;">
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+      <span class="icon-container">
+       <span class="icon-wrapper">
+         <i class="fa-solid fa-circle-exclamation type-icon"></i>
+       </span>
+     </span>
+         <p class="text">
+        
+        <strong>
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            Error: 
+          {% else %}
+            {{ message.tags|title }}
+          {% endif %}
+        </strong>
+        {{ message }}
+        </p>
+         <span class="dismiss">
+        <i class="fa-solid fa-xmark"></i>
+    </span>
+      </div>
+      {% endfor %}
+    </div>
+{% endif %}
+
+
+<script>
+  const alerts = document.querySelectorAll('.alert');
+  alerts.forEach(alert => {
+    const dismiss = alert.querySelector('.dismiss');
+    if (dismiss) {
+      dismiss.addEventListener('click', function(e){
+        dismiss.parentNode.remove();
+      });
+
+      alerts.forEach(alert => {
+        setTimeout(function(){
+          alert.remove();
+        }, 5000);
+      });
+    }
+  });
+</script>
+
+

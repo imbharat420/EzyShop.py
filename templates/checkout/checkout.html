@@ -1,0 +1,68 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+
+{% block title %} | Welcome {% endblock %}
+{% block content %}
+
+    <main class="main-wrapper">
+
+
+        <!-- ...:::Start Billing Info Section:::... -->
+        <div class="billing-info section-gap-top-25">
+            <div class="container px-0">
+                <div class="billing-information-card">
+
+                    <span class="billing-information-title">Billing Information</span>
+                    <ul class="billing-information-lists">
+                        <li class="billing-information-list"> <span> Name</span>
+                            <span>SUHA JANNAT</span>
+                        </li>
+                        <li class="billing-information-list"> <span> Email Address</span>
+                            <span>care@example.com</span>
+                        </li>
+                        <li class="billing-information-list"> <span> Phone</span>
+                            <span>+880 000 111 222</span>
+                        </li>
+                        <li class="billing-information-list"> <span> Shipping
+								Address</span> <span>28/C Green Road, BD</span> </li>
+                    </ul>
+
+                    <span class="shipping-method-title">Shipping Method Choose</span>
+                    <ul class="shipping-method-lists">
+                        <li class="shipping-method-list">
+                            <input id="fastShipping" type="radio" name="selector" checked="">
+                            <label for="fastShipping">Fast Shipping<span>1 days delivary for
+									$1.0</span></label>
+                            <div class="check"></div>
+                        </li>
+                        <li class="shipping-method-list">
+                            <input id="normalShipping" type="radio" name="selector">
+                            <label for="normalShipping">Reguler<span>3-7 days delivary for
+									$0.4</span></label>
+                            <div class="check"></div>
+                        </li>
+                        <li class="shipping-method-list">
+                            <input id="courier" type="radio" name="selector">
+                            <label for="courier">Courier<span>5-8 days delivary for $0.3</span></label>
+                            <div class="check"></div>
+                        </li>
+                    </ul>
+
+                    <div class="payment-card">
+                        <span class="total-price">$<span class="counter">39.84</span></span>
+                        <a class="btn-payment" href="index.html">Confirm &amp; Pay</a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- ...:::End Billing Info Section:::... -->
+
+    
+
+        <footer class="footer-section"></footer>
+    </main>
+
+{% endblock %}
