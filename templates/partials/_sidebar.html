@@ -87,11 +87,17 @@
                         <div class="image">
                             <img class="img-fluid" width="96" height="96" src="{% static 'assets/images/user/user-profile.png' %}" alt="image">
                         </div>
+                         {% if user.id is not None %}
                         <div class="content">
-                            <h2 class="name">Kajavasta Moon</h2>
-                            <span class="email">moon@example.com</span>
-                            <span class="id-num">ID NO: EXMPL 4566</span>
+                            <h2 class="name">{{ user.username | upper}}</h2>
+                            <span class="email">{{user.email}}</span>
+                            <span class="id-num">ID NO: {{user.id}}</span>
                         </div>
+                        {% else %}
+                          <div class="content">
+                            <h2 class="name">Guest</h2>
+                          </div>
+                        {% endif %}
                         <div class="profile-shape profile-shape-1"><img class="img-fluid" width="61" height="50" src="{% static 'assets/images/profile-shape-1.svg' %}" alt="image"></div>
                         <div class="profile-shape profile-shape-2"><img class="img-fluid" width="48" height="59" src="{% static 'assets/images/profile-shape-2.svg' %}" alt="image"></div>
                     </div>
@@ -101,6 +107,7 @@
                 <!-- ...:::Start Profile Details Section:::... -->
                 <div class="profile-details-section section-gap-top-30">
                     <div class="profile-details-wrapper">
+                         {% if user.id is not None %}
                         <div class="profile-details-top">
                             <div class="left">
                                 <span class="text">Total Buy</span>
@@ -111,7 +118,9 @@
                                 class="icon icon-carce-heart"></i></button>
                             </div>
                         </div>
+                        {% endif %}
                         <div class="profile-details-bottom">
+                            {% if user.id is not None %}
                             <ul class="profile-user-list">
                                 <li class="profile-list-item">
                                     <ul class="profile-single-list">
@@ -136,16 +145,35 @@
                                 <li class="profile-list-item">
                                     <ul class="profile-single-list">
                                         <li class="list-item">
+                                           
                                             <form action="{% url 'logout' %}" method="POST">
                                                 {% csrf_token %}
                                                 <button type="submit" class="profile-link" style="background: none;border: none;cursor: pointer;width: 100%;">
                                                     <span class="icon"><i class="icon icon-carce-login"></i></span>Log Out</button>
                                             </form>
-                                           
                                         </li>
                                     </ul>
                                 </li>
                             </ul>
+                            {% else %}
+                            <ul class="profile-user-list">
+                                <li class="profile-list-item">
+                                    <ul class="profile-single-list">
+                                        <li class="list-item">
+                                            <span class="title"></span>
+                                        </li>
+                                        <li class="list-item">
+                                            <a href="{% url 'login' %}" class="profile-link"><span class="icon"><i
+                                                class="icon icon-carce-user"></i></span>Login</a>
+                                        </li>
+                                        <li class="list-item">
+                                            <a href="{% url 'signup' %}" class="profile-link"><span class="icon"><i
+                                                class="icon icon-carce-briefcase"></i></span>Register</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

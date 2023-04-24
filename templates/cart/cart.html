@@ -3,7 +3,7 @@
 
 
 {% block title %} | Welcome {% endblock %}
-{% block content %}
+{% block content %} 
 
     <main class="main-wrapper">
         
@@ -22,7 +22,7 @@
                                 <img width="90" height="90" src="{{cart_item.product.images.url}}" alt="image">
                             </div>
                             <div class="content">
-                                <a href="{% url 'remove_cart_item' cart_item.product.id %}" class="delete-item">
+                                <a href="{% url 'remove_cart_item' cart_item.product.id cart_item.id %}" class="delete-item">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                         <path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 464c-118.7 0-216-96.1-216-216 0-118.7 96.1-216 216-216 118.7 0 216 96.1 216 216 0 118.7-96.1 216-216 216zm94.8-285.3L281.5 256l69.3 69.3c4.7 4.7 4.7 12.3 0 17l-8.5 8.5c-4.7 4.7-12.3 4.7-17 0L256 281.5l-69.3 69.3c-4.7 4.7-12.3 4.7-17 0l-8.5-8.5c-4.7-4.7-4.7-12.3 0-17l69.3-69.3-69.3-69.3c-4.7-4.7-4.7-12.3 0-17l8.5-8.5c4.7-4.7 12.3-4.7 17 0l69.3 69.3 69.3-69.3c4.7-4.7 12.3-4.7 17 0l8.5 8.5c4.6 4.7 4.6 12.3 0 17z" />
                                     </svg>
@@ -46,14 +46,20 @@
                                         <div class="product-quantity">
                                             <div class="num-block skin-2">
                                                 <div class="num-in">
-                                                    <a href="{% url 'remove_cart' cart_item.product.id %}" style="width: 33.33%;display: flex;height: 100%;position: relative;justify-content: center;z-index: 1;">
+                                                    <a href="{% url 'remove_cart' cart_item.product.id cart_item.id %}" style="width: 33.33%;display: flex;height: 100%;position: relative;justify-content: center;z-index: 1;">
                                                         <span class="minus dis" style=" z-index: 0;  pointer-events: none;padding: 10px;"></span>
                                                     </a>
                                                     <label for="quan-1" class="visually-hidden"></label>
                                                     <input id="quan-1" type="text" class="" value="{{cart_item.quantity}}" readonly="">
-                                                    <a href="{% url 'add_cart' cart_item.product.id %}" style="width: 33.33%;display: flex;height: 100%;position: relative;justify-content: center; z-index: 1;">
-                                                        <span class="plus" style=" z-index: 0;  pointer-events: none;padding: 10px;"></span>
-                                                    </a>
+                                                   <form action="{% url 'add_cart' cart_item.product.id %}" method="POST">
+                                                    {% csrf_token %} 
+                                                    {% for item in cart_item.variations.all %}
+                                                      <input type="hidden" name="{{item.variation_category | lower }}" value="{{ item.variation_value | capfirst}}">
+                                                    {% endfor %}
+                                                       <button type="submit" style="width: 33.33%;display: flex;height: 100%;position: relative;justify-content: center; z-index: 1;background: transparent;border: none;outline: none;width: 100%;height: 100%;">
+                                                            <span class="plus" style=" z-index: 0;  pointer-events: none;padding: 10px;"></span>
+                                                        </button>
+                                                   </form>
                                                 </div>
                                             </div>
                                         </div>
