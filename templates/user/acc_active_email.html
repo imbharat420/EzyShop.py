@@ -1,0 +1,12 @@
+{% autoescape off %}
+
+Hi {{ user.username }},
+
+http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+
+<!-- {% if site.name %}{{ site.name }}{% else %}{{ site.domain }}{% endif %} -->
+
+if you think this is an error, please contact us at .
+
+
+{% endautoescape %}

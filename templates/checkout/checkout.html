@@ -11,21 +11,23 @@
         <!-- ...:::Start Billing Info Section:::... -->
         <div class="billing-info section-gap-top-25">
             <div class="container px-0">
+                <forn action="{% url 'place_order' %}" method="POST">  
                 <div class="billing-information-card">
-
                     <span class="billing-information-title">Billing Information</span>
                     <ul class="billing-information-lists">
                         <li class="billing-information-list"> <span> Name</span>
-                            <span>SUHA JANNAT</span>
+                            <span>{{user.username}}</span>
                         </li>
                         <li class="billing-information-list"> <span> Email Address</span>
-                            <span>care@example.com</span>
+                            <span>{{user.email}}</span>
                         </li>
                         <li class="billing-information-list"> <span> Phone</span>
-                            <span>+880 000 111 222</span>
+                            <span>{{user.phone}}</span>
                         </li>
                         <li class="billing-information-list"> <span> Shipping
-								Address</span> <span>28/C Green Road, BD</span> </li>
+								Address</span> <span>
+                                <input type="text" name="address" id="address" placeholder="Address" value="{{user.address}}" required>
+                                </span> </li>
                     </ul>
 
                     <span class="shipping-method-title">Shipping Method Choose</span>
@@ -51,11 +53,11 @@
 
                     <div class="payment-card">
                         <span class="total-price">$<span class="counter">39.84</span></span>
-                        <a class="btn-payment" href="index.html">Confirm &amp; Pay</a>
                     </div>
-
+                    
                 </div>
-
+                <input type="submit" class="btn-payment" value="Confirm &amp; Pay" />
+               </forn>
             </div>
         </div>
         <!-- ...:::End Billing Info Section:::... -->
@@ -64,5 +66,4 @@
 
         <footer class="footer-section"></footer>
     </main>
-
 {% endblock %}

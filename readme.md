@@ -1,3 +1,19 @@
+# ISSUES 
+- [ ] (categories in cart of same variation quantity increase)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 multiple Django apps to implement the different functionalities required
 
 1. `users`: This app is responsible for handling user authentication, registration, and profile management. It can use the following templates:

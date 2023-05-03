@@ -23,6 +23,11 @@
                         <ul class="default-form-list">
                             <li class="single-form-item">
                                 <label for="name" class="visually-hidden">Name</label>
+                               {{form.name}}
+                                <span class="icon"><i class="icon icon-carce-user"></i></span>
+                            </li>
+                            <li class="single-form-item">
+                                <label for="username" class="visually-hidden">Username</label>
                                {{form.username}}
                                 <span class="icon"><i class="icon icon-carce-user"></i></span>
                             </li>
@@ -56,7 +61,7 @@
                             <span>{{error}}</span>123
                         {% endfor %}
                     {% endif %}
-                    <div class="sign-account-text text-center">Already have an account? <a href="{% url 'login' %}" class="btn--color-radical-red">Sign Up</a></div>
+                    <div class="sign-account-text text-center">Already have an account? <a href="{% url 'login' %}" class="btn--color-radical-red">Sign In</a></div>
                 </form>
                    
             <!-- {% for field in form  %}

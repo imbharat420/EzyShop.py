@@ -12,6 +12,6 @@ class VariationAdmin(admin.ModelAdmin):
     list_editable = ('is_active',)
     list_filter = ('product', 'variation_category', 'variation_value')
 
-
+ 
 admin.site.register(Product,ProductAdmin)
 admin.site.register(Variation,VariationAdmin)

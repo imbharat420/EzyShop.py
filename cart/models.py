@@ -1,7 +1,7 @@
 from django.db import models
 from shop.models import Product
 from shop.models import Variation
-
+from user.models import User
 
 class Cart(models.Model):
     cart_id = models.CharField(max_length=250,blank=True)
@@ -11,9 +11,10 @@ class Cart(models.Model):
         return self.cart_id
 
 class CartItem(models.Model):
+    user = models.ForeignKey(User,null=True,on_delete=models.CASCADE)
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
     variations = models.ManyToManyField(Variation,blank=True)
-    cart = models.ForeignKey(Cart,on_delete=models.CASCADE)
+    cart = models.ForeignKey(Cart,on_delete=models.CASCADE,null=True)
     quantity=models.IntegerField()
     is_active=models.BooleanField(default=True)
     
