@@ -1,0 +1,197 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+
+{% block title %} | Welcome {% endblock %}
+{% block content %}
+    <main class="main-wrapper">
+
+
+        <!-- ...:::Start Billing Info Section:::... -->
+        <div class="billing-info section-gap-top-25">
+            <div class="container px-0">
+            <form action="{% url 'place_order' %}" method="POST"> 
+                {% csrf_token %} 
+                <div class="billing-information-card" >
+                       <span class="billing-information-title">Billing Information</span>
+              
+                        <ul class="billing-information-lists">
+                            <li class="billing-information-list"> <span> Name</span>
+                                <span>{{user.name}}</span>
+                            </li>
+                            <li class="billing-information-list"> <span> Email Address</span>
+                                <span>{{user.email}}</span>
+                            </li>
+                            <li class="billing-information-list"> <span> Phone</span>
+                                <span>{{user.phone}}</span>
+                            </li>
+                            <li class="billing-information-list" style="align-items: flex-start;"> 
+                                <span> Shipping Address</span> 
+                                <div>
+                                   <ul>
+                                       <li><span>{{order.address_line_1}}</span></li>
+                                       <li><span>{{order.address_line_2}}</span></li>
+                                   </ul>
+                                </div>
+                                     
+                            </li>
+                            <li class="billing-information-list"> <span> Order Note</span>
+                                <span>{{order.order_note}}</span>
+                            </li>
+                        </ul>
+                        
+                       <span class="billing-information-title">Payments Methods</span>
+              
+                        <ul class="billing-information-lists">
+                        <li class="billing-information-list"> <span> Net Banking</span>
+                                <span>Paypal</span>
+                            </li>
+                                <!-- <li class="billing-information-list"> <span> Email Address</span>
+                                <span>care@example.com</span>
+                            </li>
+                            <li class="billing-information-list"> <span> Phone</span>
+                                <span>+880 000 111 222</span>
+                            </li>
+                            <li class="billing-information-list"> <span> Shipping
+                                    Address</span> <span>28/C Green Road, BD</span> </li> -->
+                        </ul>
+                     <span class="billing-information-title">Review Products</span>
+              
+                    <ul class="billing-information-lists">
+                         {% for cart_item in cart_items %}
+                        <li class="single-cart-item">
+                            <div class="image">
+                                <img width="90" height="90" src="{{ cart_item.product.images.url }}" alt="">
+                            </div>
+                            <div class="content">
+                                <a href="" class="title">{{ cart_item.product.product_name }}</a>
+                                <div class="details">
+                                    <div class="left">
+                                        <span class="brand">
+                                            {% if cart_item.variations.all %}
+                                                {% for item in cart_item.variations.all %}
+                                                    {{ item.variation_category | capfirst }} : {{ item.variation_value | capfirst }} <br>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </span>
+                                        <span class="price">${{cart_item.sub_total}}</span>
+                                    </div>
+                                    <div class="right">
+                                        <p><span class="icon"></span>${{ cart_item.product.price }} x {{cart_item.quantity}} </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    
+                    <div class="payment-card">
+                        <span class="total-price">Total</span>
+                        <span class="total-price">$<span class="counter">{{total}}</span></span>
+                    </div>
+                    <div class="payment-card">
+                        <span class="total-price">Tax</span>
+                        <span class="total-price"><span class="counter">{{tax}}</span>%</span>
+                    </div>
+                    <div class="payment-card">
+                        <span class="total-price">Grand Total</span>
+                        <span class="total-price">$<span class="counter">{{grand_total}}</span></span>
+                    </div>
+                    
+
+                     <div class="payment-card">
+                         <div id="paypal-button-container" style="width: 100%"></div>
+                        <!-- <input type="submit" class="btn-payment" value="Make Payments" style="width:100%;padding: 20px 0px;"/> -->
+                    </div>
+                </div>
+               </form>
+            </div>
+        </div>
+        <!-- ...:::End Billing Info Section:::... -->
+
+    
+
+        <footer class="footer-section"></footer>
+    </main>
+
+
+   <script>
+    	function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        var amount = "{{ grand_total }}"
+        var url =  "{% url 'payments' %}"
+        var payment_method = 'PayPal'
+        var csrftoken = getCookie('csrftoken');
+        var orderID = "{{order.order_number}}"
+        paypal.Buttons({
+
+            style: {
+                color: 'blue',
+                shape: 'rect',
+                label: 'pay',
+                height: 40
+            },
+
+            // Set up the transaction
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: amount,
+                        }
+                    }]
+                });
+            },
+
+            // Finalize the transaction
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    
+                    console.log(details);
+                    sendDate()
+                    function sendDate(){
+                        fetch(url,{
+                            method:"POST",
+                            headers:{
+                                'Content-Type':'application/json',
+                                'X-CSRFToken':csrftoken,
+                            },
+                            body:JSON.stringify({
+                               	orderID: orderID,
+                                transID: details.id,
+                                payment_method: payment_method,
+                                status: details.status,
+                            })
+                        })
+                        .then(function(response){
+                            return response.json()
+                        })
+                        .then(function(data){
+                            
+                            console.log("success")
+                            console.log(data)
+                            // window.location.href = redirect_url + '?order_number='+data.order_number+'&payment_id='+data.transID;
+                        }).catch(err=>{
+                            console.log("error")
+                            console.log(err)
+                        })
+                    }
+                });
+            }
+        }).render('#paypal-button-container');
+</script>
+{% endblock %}

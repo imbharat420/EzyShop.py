@@ -4,60 +4,106 @@
 
 {% block title %} | Welcome {% endblock %}
 {% block content %}
-
     <main class="main-wrapper">
 
 
         <!-- ...:::Start Billing Info Section:::... -->
         <div class="billing-info section-gap-top-25">
             <div class="container px-0">
-                <forn action="{% url 'place_order' %}" method="POST">  
+            <form action="{% url 'place_order' %}" method="POST"> 
+                {% csrf_token %} 
                 <div class="billing-information-card">
                     <span class="billing-information-title">Billing Information</span>
                     <ul class="billing-information-lists">
-                        <li class="billing-information-list"> <span> Name</span>
-                            <span>{{user.username}}</span>
-                        </li>
-                        <li class="billing-information-list"> <span> Email Address</span>
-                            <span>{{user.email}}</span>
-                        </li>
-                        <li class="billing-information-list"> <span> Phone</span>
-                            <span>{{user.phone}}</span>
-                        </li>
-                        <li class="billing-information-list"> <span> Shipping
-								Address</span> <span>
-                                <input type="text" name="address" id="address" placeholder="Address" value="{{user.address}}" required>
-                                </span> </li>
+                            <li class="single-form-item" style="margin-top: 10px;">
+                                <label for="name" class="visually-hidden">Name</label>
+                                <input name="name" type="text" id="name" placeholder="username" value="{{user.name}}">
+                                <span class="icon"><i class="icon icon-carce-user"></i></span>
+                            </li>
+                            <li class="single-form-item" style="margin-top: 10px;">
+                                <label for="email" class="visually-hidden">Email</label>
+                                <input name="email" type="email" id="email" placeholder="email" value="{{user.email}}">
+                                <span class="icon"><i class="icon icon-carce-mail"></i></span>
+                            </li>
+                            <li class="single-form-item" style="margin-top: 10px;">
+                                <label for="phone" class="visually-hidden">phone</label>
+                                <input name="phone" type="phone" id="phone" placeholder="phone" value="{{user.phone}}">
+                                <span class="icon"><i class="icon icon-carce-mail"></i></span>
+                            </li>
+                            <li class="single-form-item" style="margin-top: 10px;">
+                                <label for="address_line_1" class="visually-hidden">address_line_1</label>
+                                <input name="address_line_1" type="text" id="address_line_1" placeholder="address_line_1" value="">
+                                <span class="icon"><i class="icon icon-carce-mail"></i></span>
+                            </li>
+                            <li class="single-form-item" style="margin-top: 10px;">
+                                <label for="address_line_2" class="visually-hidden">address_line_2</label>
+                                <input name="address_line_2" type="text" id="address_line_2" placeholder="address_line_2" value="">
+                                <span class="icon"><i class="icon icon-carce-mail"></i></span>
+                            </li>
+                            <li class="single-form-item" style="margin-top: 10px;">
+                                <label for="country" class="visually-hidden">country</label>
+                                <input name="country" type="text" id="country" placeholder="country" value="">
+                                <span class="icon"><i class="icon icon-carce-mail"></i></span>
+                            </li>
+                            <li class="single-form-item" style="margin-top: 10px;">
+                                <label for="state" class="visually-hidden">state</label>
+                                <input name="state" type="text" id="state" placeholder="state" value="">
+                                <span class="icon"><i class="icon icon-carce-mail"></i></span>
+                            </li>
+                            <li class="single-form-item" style="margin-top: 10px;">
+                                <label for="city" class="visually-hidden">city</label>
+                                <input name="city" type="text" id="city" placeholder="city" value="">
+                                <span class="icon"><i class="icon icon-carce-mail"></i></span>
+                            </li>
+                            <li class="single-form-item" style="margin-top: 10px;">
+                                <label for="order_note" class="visually-hidden">order_note</label>
+                                <input name="order_note" type="text" id="order_note" placeholder="order_note" value="">
+                                <span class="icon"><i class="icon icon-carce-mail"></i></span>
+                            </li>
                     </ul>
-
-                    <span class="shipping-method-title">Shipping Method Choose</span>
-                    <ul class="shipping-method-lists">
-                        <li class="shipping-method-list">
-                            <input id="fastShipping" type="radio" name="selector" checked="">
-                            <label for="fastShipping">Fast Shipping<span>1 days delivary for
-									$1.0</span></label>
-                            <div class="check"></div>
+                    
+                    <ul class="shipping-method-list">
+                        <!-- <li>
+                            <h1 class="title" style="text-align: center;">Products</h1>
+                        </li> -->
+                        {% for cart_item in cart_items %}
+                        <li class="single-cart-item">
+                            <div class="image">
+                                <img width="90" height="90" src="{{ cart_item.product.images.url }}" alt="">
+                            </div>
+                            <div class="content">
+                                <a href="" class="title">{{ cart_item.product.product_name }}</a>
+                                <div class="details">
+                                    <div class="left">
+                                        <span class="brand">
+                                            {% if cart_item.variations.all %}
+                                                {% for item in cart_item.variations.all %}
+                                                    {{ item.variation_category | capfirst }} : {{ item.variation_value | capfirst }} <br>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </span>
+                                        <span class="price">${{cart_item.sub_total}}</span>
+                                    </div>
+                                    <div class="right">
+                                        <p><span class="icon"></span>${{ cart_item.product.price }} x {{cart_item.quantity}} </p>
+                                    </div>
+                                </div>
+                            </div>
                         </li>
-                        <li class="shipping-method-list">
-                            <input id="normalShipping" type="radio" name="selector">
-                            <label for="normalShipping">Reguler<span>3-7 days delivary for
-									$0.4</span></label>
-                            <div class="check"></div>
-                        </li>
-                        <li class="shipping-method-list">
-                            <input id="courier" type="radio" name="selector">
-                            <label for="courier">Courier<span>5-8 days delivary for $0.3</span></label>
-                            <div class="check"></div>
-                        </li>
+                        {% endfor %}
                     </ul>
 
                     <div class="payment-card">
-                        <span class="total-price">$<span class="counter">39.84</span></span>
+                        <span class="total-price">Total</span>
+                        <span class="total-price">$<span class="counter">{{total}}</span></span>
                     </div>
                     
+
+                     <div class="">
+                        <input type="submit" class="btn-payment" value="Place Order" style="width:100%;padding: 20px 0px;"/>
+                    </div>
                 </div>
-                <input type="submit" class="btn-payment" value="Confirm &amp; Pay" />
-               </forn>
+               </form>
             </div>
         </div>
         <!-- ...:::End Billing Info Section:::... -->
