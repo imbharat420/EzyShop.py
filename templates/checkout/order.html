@@ -11,84 +11,37 @@
             <div class="container">
                 <div class="cart-items-wrapper">
                     <ul class="cart-item-list">
+
+                        {% for orderproduct in orderproducts %}
                         <!-- Start Single Cart Item -->
-                        <li class="single-cart-item">
-                            <div class="image">
-                                <img width="90" height="90" src="assets/images/product/small/product-1-small-1.png" alt="">
-                            </div>
-                            <div class="content">
-                                <a href="" class="title">Cat sports mans shoe</a>
-                                <div class="details">
-                                    <div class="left">
-                                        <span class="brand">Rebook</span>
-                                        <span class="price">$500.00</span>
-                                    </div>
-                                    <div class="right">
-                                        <p><span class="icon"><i class="icon icon-carce-check-circle"></i></span> Completed</p>
+                            <li class="single-cart-item">
+                                <div class="image">
+                                    <img width="90" height="90" src="{{orderproduct.product.images.url}}" alt="">
+                                </div>
+                                <div class="content">
+                                    <a href="" class="title">{{orderproduct.product.product_name}}</a>
+                                    <div class="details">
+                                        <div class="left"> 
+                                             {% if orderproduct.variations.all %}
+                                                {% for item in orderproduct.variations.all %}
+                                                    <span class="brand" style="margin-right: 20px;">{{item.variation_category}}: {{item.variation_value | upper}}</span>
+                                                {% endfor %}
+                                            {% endif %}
+                                            <span style="display:flex">
+                                              <span class="price" style="width:unset">${{orderproduct.product_price}} &nbsp;</span> x{{orderproduct.quantity}}
+                                            </span>
+                                        </div>
+                                        <div class="right">
+                                            <p><span class="icon"><i class="icon icon-carce-check-circle"></i></span> {{orderproduct.order.status}}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
+                            </li>
                         <!-- End Single Cart Item -->
-                        <!-- Start Single Cart Item -->
-                        <li class="single-cart-item">
-                            <div class="image">
-                                <img width="90" height="90" src="assets/images/product/small/product-1-small-2.png" alt="">
-                            </div>
-                            <div class="content">
-                                <a href="" class="title">Nikka sports mans shoe</a>
-                                <div class="details">
-                                    <div class="left">
-                                        <span class="brand">Nikka</span>
-                                        <span class="price">$450.00</span>
-                                    </div>
-                                    <div class="right">
-                                        <p><span class="icon"><i class="icon icon-carce-cancel"></i></span> Cancelled</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <!-- End Single Cart Item -->
-                        <!-- Start Single Cart Item -->
-                        <li class="single-cart-item">
-                            <div class="image">
-                                <img width="90" height="90" src="assets/images/product/small/product-1-small-3.png" alt="">
-                            </div>
-                            <div class="content">
-                                <a href="" class="title">Adur sports shoe</a>
-                                <div class="details">
-                                    <div class="left">
-                                        <span class="brand">Rebook</span>
-                                        <span class="price">$399.00</span>
-                                    </div>
-                                    <div class="right">
-                                        <p><span class="icon"><i class="icon icon-carce-check-circle"></i></span> Completed</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <!-- End Single Cart Item -->
-                        <!-- Start Single Cart Item -->
-                        <li class="single-cart-item">
-                            <div class="image">
-                                <img width="90" height="90" src="assets/images/product/small/product-1-small-4.png" alt="">
-                            </div>
-                            <div class="content">
-                                <a href="" class="title">Fnik sports mans shoe</a>
-                                <div class="details">
-                                    <div class="left">
-                                        <span class="brand">Rebook</span>
-                                        <span class="price">$410.00</span>
-                                    </div>
-                                    <div class="right">
-                                        <p><span class="icon"><i class="icon icon-carce-check-circle"></i></span> Completed</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <!-- End Single Cart Item -->
+                        {% endfor %}
+                   
                     </ul>
-                    <button class="load-more-btn">load more</button>
+                    <!-- <button class="load-more-btn">load more</button> -->
                 </div>
             </div>
         </div>

@@ -42,12 +42,14 @@
                             <li>
                                 <a href="#"><span>Pages</span></a>
                                 <ul class="mobile-sub-menu">
-                                    <li><a href="{% url 'home' %}">Chat</a></li>
+                                    <!-- <li><a href="{% url 'home' %}">Chat</a></li> -->
                                     <li><a href="{% url 'cart' %}">Cart</a></li>
                                     <li><a href="{% url 'wishlist' %}">Wishlist</a></li>
                                     <li><a href="{% url 'order' %}">Order</a></li>
-                                    <li><a href="{% url 'login' %}">Login</a></li>
-                                    <li><a href="{% url 'signup' %}">Register</a></li>
+                                    {% if user == None %}
+                                        <li><a href="{% url 'login' %}">Login</a></li>
+                                        <li><a href="{% url 'signup' %}">Register</a></li>
+                                    {% endif %}
                                 </ul>
                             </li>
                         </ul>
@@ -55,13 +57,13 @@
                 </div> <!-- End Mobile Menu -->
 
                 <!-- Start Mobile contact Info -->
-                <div class="mobile-contact-info">
+                <!-- <div class="mobile-contact-info">
                     <address class="address">
                         <span>Address: 4710-4890 Breckinridge St, Fayettevill</span>
                         <span>Call Us: (+800) 345 678, (+800) 123 456</span>
                         <span>Email: yourmail@mail.com</span>
                     </address>
-                </div>
+                </div> -->
                 <!-- End Mobile contact Info -->
 
             </div> <!-- End Offcanvas Mobile Menu Wrapper -->
@@ -85,7 +87,12 @@
                 <div class="profile-card-section section-gap-top-25">
                     <div class="profile-card-wrapper">
                         <div class="image">
-                            <img class="img-fluid" width="96" height="96" src="{% static 'assets/images/user/user-profile.png' %}" alt="image">
+                             {% if user.profile_pic %}
+                                    <img class="img-fluid" src="{{ user.profile_pic }}" alt="" width="96" height="96" style="width: 96px;height: 96px;">
+                            {% else %}
+                                <img class="img-fluid" src="{% static 'assets/images/user/user-profile.png' %}" alt="" width="96" height="96">
+                            {% endif %}
+                            
                         </div>
                          {% if user.id is not None %}
                         <div class="content">
@@ -108,16 +115,16 @@
                 <div class="profile-details-section section-gap-top-30">
                     <div class="profile-details-wrapper">
                          {% if user.id is not None %}
-                        <div class="profile-details-top">
-                            <div class="left">
-                                <span class="text">Total Buy</span>
-                                <span class="price">$2000.00</span>
+                            <div class="profile-details-top">
+                                <div class="left">
+                                    <span class="text">Total Buy</span>
+                                    <span class="price">${{total_order_price}}</span>
+                                </div>
+                                <div class="right">
+                                    <button aria-label="Wishlist" class="btn btn--size-58-58 btn--font-size-22 btn--center btn--round btn--color-radical-red btn--bg-white btn--box-shadow"><i
+                                    class="icon icon-carce-heart"></i></button>
+                                </div>
                             </div>
-                            <div class="right">
-                                <button aria-label="Wishlist" class="btn btn--size-58-58 btn--font-size-22 btn--center btn--round btn--color-radical-red btn--bg-white btn--box-shadow"><i
-                                class="icon icon-carce-heart"></i></button>
-                            </div>
-                        </div>
                         {% endif %}
                         <div class="profile-details-bottom">
                             {% if user.id is not None %}
@@ -135,10 +142,10 @@
                                             <a href="{% url 'checkout' %}" class="profile-link"><span class="icon"><i
                                                 class="icon icon-carce-briefcase"></i></span>Billing & Payment</a>
                                         </li>
-                                        <li class="list-item">
+                                        <!-- <li class="list-item">
                                             <a href="{% url 'notifications' %}" class="profile-link"><span class="icon"><i
                                                 class="icon icon-carce-bell"></i></span>Notification</a>
-                                        </li>
+                                        </li> -->
                                     </ul>
                                 </li>
 

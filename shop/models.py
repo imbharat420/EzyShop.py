@@ -48,3 +48,37 @@ class Variation(models.Model):
 
     def __str__(self):
         return self.variation_value
+    
+
+
+
+class ProductGallery(models.Model):
+    product = models.ForeignKey(Product, default=None, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='shop/products', max_length=255)
+
+    def __str__(self):
+        return self.product.product_name
+        
+    class Meta:
+        verbose_name = 'productgallery'
+        verbose_name_plural = 'product gallery'
+
+
+class Banner(models.Model):
+    banner_title = models.CharField(max_length=50)
+    banner_subtitle = models.CharField(max_length=50)
+    banner_image = models.ImageField(upload_to='shop/banner', max_length=255)
+    banner_url = models.ForeignKey(Product, on_delete=models.CASCADE,default=1)
+    banner_alt = models.CharField(max_length=200)
+    is_active = models.BooleanField(default=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE,default=1)
+    created_date = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.banner_title
+    
+    def get_url(self):
+        return reverse('products_by_category', args=[self.category.slug])
+
+    class Meta:
+        verbose_name = 'banner'
+        verbose_name_plural = 'banners'

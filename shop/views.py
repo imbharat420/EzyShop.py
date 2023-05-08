@@ -1,5 +1,5 @@
-from django.shortcuts import render , get_object_or_404
-from .models import Product
+from django.shortcuts import render , get_object_or_404, redirect
+from .models import Product, ProductGallery,Banner
 from category.models import Category
 from cart.models import CartItem
 from cart.views import _cart_id
@@ -8,6 +8,7 @@ from django.db.models import Q
 def shop(request,category_slug=None):
     categories = None
     products = None 
+    banners = None
     categories = Category.objects.all()
     if category_slug != None:
         categories = get_object_or_404(Category,slug=category_slug)
@@ -17,10 +18,17 @@ def shop(request,category_slug=None):
         products = Product.objects.all().filter(is_available=True)
         products_count = products.count()
 
+    # banner_by_category
+    try:
+        banners = Banner.objects.filter(category=categories,is_active=True)
+    except Exception as e:
+        pass 
+
     context = {
         "products":products,
         'categories':categories,
-        "total": products_count
+        "total": products_count,
+        "banners":banners,
     }
     return render(request, 'shop/shop.html',context)
 
@@ -36,10 +44,14 @@ def product_details(request,category_slug,product_slug):
     except Exception as e:
         raise e
     
+
+    product_gallery = ProductGallery.objects.filter(product_id=single_product.id)
+    
     # print(single_product)
     context = {
         "single_product": single_product,
-        "in_cart": in_cart
+        "in_cart": in_cart,
+        "product_gallery": product_gallery,
     }
     return render(request, 'shop/single-product.html',context)
 
@@ -87,10 +99,5 @@ def category(request):
 
 
 def product(request):
-    products = Product.objects.all()
-    context = {
-        "products": products
-    }
-    print(products)
-    return render(request, 'shop/single-product.html',context)
+    return redirect('shop')
 

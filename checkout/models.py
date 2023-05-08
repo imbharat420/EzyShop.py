@@ -50,6 +50,13 @@ class Order(models.Model):
 
     def __str__(self):
         return self.name
+    
+    # According to authenticated user get total price
+    # def get_total_price(self):
+    #     total = 0
+    #     for item in self.items.all():
+    #         total += item.get_total_price()
+    #     return total
 
 
 class OrderProduct(models.Model):

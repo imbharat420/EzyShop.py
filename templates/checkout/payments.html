@@ -134,6 +134,7 @@
 
         var amount = "{{ grand_total }}"
         var url =  "{% url 'payments' %}"
+        var redirect_url = "{% url 'order_complete' %}"
         var payment_method = 'PayPal'
         var csrftoken = getCookie('csrftoken');
         var orderID = "{{order.order_number}}"
@@ -177,14 +178,9 @@
                                 status: details.status,
                             })
                         })
-                        .then(function(response){
-                            return response.json()
-                        })
-                        .then(function(data){
-                            
-                            console.log("success")
-                            console.log(data)
-                            // window.location.href = redirect_url + '?order_number='+data.order_number+'&payment_id='+data.transID;
+                        .then((response)=> response.json())
+                        .then(function(data){                           
+                            window.location.href = redirect_url + '?order_number='+data.order_number+'&payment_id='+data.transID;
                         }).catch(err=>{
                             console.log("error")
                             console.log(err)

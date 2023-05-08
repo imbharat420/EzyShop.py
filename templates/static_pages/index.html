@@ -2,7 +2,7 @@
 {% load static %}
 
 
-{% block title %} | Welcome {% endblock %}
+{% block title %} Home {% endblock %}
 {% block content %}
 
     <main class="main-wrapper">
@@ -34,6 +34,7 @@
         <div class="hero-section section-gap-top-25">
             <div class="container">
                 <div class="row">
+                     
                     <div class="col-12">
                         <!-- Start Hero Area -->
                         <div class="hero-area hero-area--style-2 hero-slider-active">
@@ -42,47 +43,24 @@
                                 <!-- Additional required wrapper -->
                                 <div class="swiper-wrapper">
                                     <!-- Slides -->
-                                    <div class="swiper-slide">
-                                        <div class="hero-singel-slide ">
-                                            <div class="hero-bg">
-                                                <img width="388" height="130" class="img-full" src="{% static 'assets/images/hero/bg/hero-2-bg-1.jpg' %}" alt="">
-                                            </div>
-                                            <div class="inner-wrapper">
-                                                <div class="content">
-                                                    <h2 class="title">Office Decoration</h2>
-                                                    <h3 class="sub-title">30% Off</h3>
+                                   
+                                    {% for banner in banners %}
+                                        <div class="swiper-slide">
+                                            <div class="hero-singel-slide ">
+                                                <div class="hero-bg">
+                                                    <img width="388" height="130" class="img-full" src="{{ banner.banner_image.url }}" alt="">
+                                                </div>
+                                                <div class="inner-wrapper">
+                                                    <div class="content">
+                                                        <h2 class="title">{{ banner.banner_title }}</h2>
+                                                        <h3 class="sub-title">{{ banner.banner_subtitle }}</h3>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <!-- Slides -->
-                                    <div class="swiper-slide">
-                                        <div class="hero-singel-slide ">
-                                            <div class="hero-bg">
-                                                <img width="388" height="130" class="img-full" src="{% static 'assets/images/hero/bg/hero-2-bg-1.jpg' %}" alt="">
-                                            </div>
-                                            <div class="inner-wrapper">
-                                                <div class="content">
-                                                    <h2 class="title">Office Decoration</h2>
-                                                    <h3 class="sub-title">40% Off</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Slides -->
-                                    <div class="swiper-slide">
-                                        <div class="hero-singel-slide ">
-                                            <div class="hero-bg">
-                                                <img width="388" height="130" class="img-full" src="{% static 'assets/images/hero/bg/hero-2-bg-1.jpg' %}" alt="">
-                                            </div>
-                                            <div class="inner-wrapper">
-                                                <div class="content">
-                                                    <h2 class="title">Office Decoration</h2>
-                                                    <h3 class="sub-title">60% Off</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    {% endfor %}
+
+
                                 </div>
                             </div>
 
@@ -106,38 +84,16 @@
                     </div>
                 </div>
 
-                <div class="title-content">
+                <!-- <div class="title-content">
                     <h2 class="title">Best Seller</h2>
                     <a href="#" class="view-all">View All</a>
-                </div>
-                <div class="catagories-wrapper">
-                    <div class="catagories-wrapper-content">
-                        <!-- Start Product Single Item -->
-                        <div class="single-product-item product-item--style-2">
-                            <div class="image product-item--bg-neon-carrot">
-                                <a href="{% url 'product' %}">
-                                    <img width="58" height="69" class="img-fluid" src="{% static 'assets/images/product/normal/product-2-img-1.png' %}" alt="">
-                                </a>
-                                <a href="{% url 'wishlist' %}" aria-label="Wishlist" class="btn btn--size-33-33 btn--center btn--round btn--color-radical-red btn--bg-white btn--box-shadow"><i class="icon icon-carce-heart"></i></a>
-                            </div>
-                            <div class="content">
-                                <div class="content--left">
-                                    <a href="{% url 'product' %}" class="title">Tanin Chair</a>
-                                    <span class="price">$500.00</span>
-                                </div>
-                                <div class="content--right">
-                                    <span class="review-star-text"><i class="icon-carce-ios-star"></i> 4.5</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- ENd Product Single Item -->
-                    </div>
-                </div>
+                </div> -->
+                
 
                 <div class="title-content">
                     <h2 class="title">New Arrival</h2>
-                    <a href="#" class="view-all">View All</a>
-                </div>
+                    <a href="{% url 'shop' %}" class="view-all">View All</a>
+                </div> 
                 <div class="catagories-wrapper">
                     <div class="catagories-wrapper-content">
 
@@ -149,7 +105,15 @@
                                     <!-- {% static 'assets/images/product/normal/product-2-img-1.png' %} -->
                                     <img width="58" height="69" class="img-fluid" src="{{ product.images.url }}" alt="">
                                 </a>
-                                <a href="{% url 'wishlist' %}" aria-label="Wishlist" class="btn btn--size-33-33 btn--center btn--round btn--color-radical-red btn--bg-white btn--box-shadow"><i class="icon icon-carce-heart"></i></a>
+
+                                <form action="{% url 'wishlist' %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="product_id" value="{{ product.id }}" />
+                                    <button type="submit" aria-label="Wishlist" class="btn btn--size-33-33 btn--center btn--round btn--color-radical-red btn--bg-white btn--box-shadow">
+                                        <i class="icon icon-carce-heart"></i>
+                                    </button>
+                                </form>
+                                
                             </div>
                             <div class="content">
                                 <div class="content--left">
@@ -176,6 +140,12 @@
 
 
     <script>
+
+        
+
+
+
+
         function filterFunction(that, event) {
             let container, input, filter, li, input_val;
             container = $(that).closest(".searchable");

@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.http import HttpResponse
-from .models import Cart, CartItem
+from .models import Cart, CartItem, Wishlist
 from shop.models import Product,Variation
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 def _cart_id(request):
     Cart = request.session.session_key
@@ -42,17 +44,22 @@ def add_cart(request, product_id):
                 existing_variation = item.variations.all()
                 ex_var_list.append(list(existing_variation))
                 id.append(item.id)
+                print("Item =",item,id)
 
-
+            print("ex_var_list =",ex_var_list, "id =",id, "product_variation =",product_variation)
             # !MAIN STUFF FOR INCREASING AND DECREASING QUANTITY +=1
-            if product_variation in ex_var_list: #!increase the quantity in cart
-                index = ex_var_list.index(product_variation)
-                item_id = id[index]
+            matching_index = next((index for index, existing_variation in enumerate(ex_var_list) if set(existing_variation) == set(product_variation)), None)
+
+            # Check if a matching variation was found
+            if matching_index is not None:
+                # If found, increase the quantity of the existing cart item
+                item_id = id[matching_index]
                 item = CartItem.objects.get(product=product, id=item_id)
                 item.quantity += 1
                 item.save()
-            else: #!add new item in cart
-                item = CartItem.objects.create(product=product, quantity=1, user=current_user)
+            else:
+                # If not found, add a new cart item
+                item = CartItem.objects.create(product=product, quantity=1, cart=cart)
                 if len(product_variation) > 0:
                     item.variations.clear()
                     item.variations.add(*product_variation)
@@ -69,6 +76,7 @@ def add_cart(request, product_id):
                 for item in product_variation:
                     cart_item.variations.add(item)
             cart_item.save()
+            messages.success(request, "Product added to cart.")
         return redirect('cart')
 
     else:
@@ -162,6 +170,7 @@ def remove_cart(request, product_id,cart_item_id):
             cart_item.save()
         else:
             cart_item.delete()
+            messages.success(request, "Product has been removed from cart.")
     except:
         pass
     return redirect('cart')
@@ -174,6 +183,7 @@ def remove_cart_item(request, product_id,cart_item_id):
         cart = Cart.objects.get(cart_id=_cart_id(request))
         cart_item = CartItem.objects.get(product=product, cart=cart, id=cart_item_id)
     cart_item.delete() 
+    messages.success(request, "Product has been removed from cart.")
     return redirect('cart')
 
 
@@ -204,7 +214,38 @@ def cart(request,total=0, quantity=0, cart_items=None):
     }
     return render(request, 'cart/cart.html',context)
 
+
+@login_required(login_url='login')
 def wishlist(request):
-    return render(request, 'cart/wishlist.html')
+    wishlist = None
+    if request.method == 'POST':
+            product_id = request.POST['product_id']
+            product = Product.objects.get(id=product_id)
+            wishlist = Wishlist.objects.filter(user=request.user, product=product)
+
+            if wishlist.exists():
+                pass
+            else:
+                Wishlist.objects.create(user=request.user, product=product)
+                messages.success(request, 'Product added to wishlist')
+            return redirect('wishlist')
+    else:
+        wishlist = Wishlist.objects.filter(user=request.user)
+
+    context = {
+        'wishlist': wishlist
+    }
+
+    return render(request, 'cart/wishlist.html',context)
 
 
+
+@login_required(login_url='login')
+def remove_wishlist_item(request, product_id):
+    wishlist = None
+    product = Product.objects.get(id=product_id)
+    wishlist = Wishlist.objects.filter(user=request.user, product=product)
+    wishlist.delete()
+    messages.success(request, 'Product removed from wishlist')
+    return redirect('wishlist')
+    

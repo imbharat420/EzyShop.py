@@ -2,7 +2,7 @@
 {% load static %}
 
 
-{% block title %} | Welcome {% endblock %}
+{% block title %} {{single_product.product_name }} {% endblock %}
 {% block content %}
 
     <main class="main-wrapper">
@@ -19,27 +19,23 @@
                             <!-- Additional required wrapper -->
                             <div class="swiper-wrapper">
                                 <!-- Slides -->
-                                <div class="swiper-slide">
+                                  <div class="swiper-slide">
                                     <div class="product-gallery-single-item">
                                         <div class="image">
                                             <img class="img-fluid" width="276" height="172" src="{{ single_product.images.url}}" alt="">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="swiper-slide">
-                                    <div class="product-gallery-single-item">
-                                        <div class="image">
-                                            <img class="img-fluid" width="276" height="172" src="{{ single_product.images.url}}" alt="">
+                                {% for i in product_gallery %}
+                                    <div class="swiper-slide">
+                                        <div class="product-gallery-single-item">
+                                            <div class="image">
+                                                <img class="img-fluid" width="276" height="172" src="{{ i.image.url}}" alt="">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="product-gallery-single-item">
-                                        <div class="image">
-                                            <img class="img-fluid" width="276" height="172" src="{{ single_product.images.url}}" alt="">
-                                        </div>
-                                    </div>
-                                </div>
+                                {% endfor %}
+                             
                             </div>
                         </div>
                         <div class="gallery-nav-btn">
@@ -66,20 +62,15 @@
                                         </div>
                                     </div>
                                 </div>
+                             {% for i in product_gallery %}
                                 <div class="swiper-slide">
                                     <div class="product-thumb-single-item">
                                         <div class="image">
-                                            <img class="img-fluid" width="45" height="45" src="{{ single_product.images.url}}" alt="">
+                                            <img class="img-fluid" width="45" height="45" src="{{ i.image.url}}" alt="">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="swiper-slide">
-                                    <div class="product-thumb-single-item">
-                                        <div class="image">
-                                            <img class="img-fluid" width="45" height="45" src="{{ single_product.images.url}}" alt="">
-                                        </div>
-                                    </div>
-                                </div>
+                            {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -91,108 +82,104 @@
                 <div class="product-gallery-details">
                     <span class="rating">Rating 4.0 of 5</span>
                     <h1 class="title">{{ single_product.product_name  }}</h1>
-                    <p class="text">There are many variations of passages of Lorem. The
-                        Best Shoes in the world. © 2021</p>
+                    <p class="text">There are many variations of {{single_product.category}} of {{ single_product.product_name  }}. The
+                        Best {{single_product.category}} in the world.</p>
                     <form action="{% url 'add_cart' single_product.id %}" method="POST">    
                     {% csrf_token %}
-                    <ul class="product-variable-lists">
-                        <li class="list-item">
-                            <div class="left">Size</div>
-                            <div class="right">
-                                <ul class="size-chart inner-child-item">
-                                    {% for i in single_product.variation_set.sizes %}
-                                        {{size}}
-                                        <li> 
-                                            <label for="{{i.variation_value}}">
-                                                <input type="radio" name="size" required value="{{i.variation_value}}" id="{{i.variation_value}}">
-                                                <span class="size-text">{{i.variation_value | upper }}</span>
-                                            </label>
-                                        </li>
-                                    {% endfor %}
-                                    <!-- <li>
-                                        <label for="medium">
-                                            <input type="radio" name="size" id="medium">
-                                            <span class="size-text">M</span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label for="large">
-                                            <input type="radio" name="size" id="large">
-                                            <span class="size-text">L</span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label for="xlarge">
-                                            <input type="radio" name="size" id="xlarge">
-                                            <span class="size-text">XL</span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label for="xxlarge">
-                                            <input type="radio" name="size" id="xxlarge">
-                                            <span class="size-text">XXL</span>
-                                        </label>
-                                    </li> -->
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="list-item">
-                            <div class="left">Color</div>
-                            <div class="right">
-                                <ul class="color-chart inner-child-item">
-                                    {% for i in single_product.variation_set.colors %}
-                                        <li>
-                                            <label for="{{i.variation_value}}">
-                                                <input type="radio" name="color" required value="{{i.variation_value}}" id="{{i.variation_value}}">
-                                                <span class="color-box color-box--blue"  style="background-color: {{i.variation_value}};box-shadow: 0px 0px 1px 1px rgba(0,0,0, 0.3)"></span>
-                                            </label>
-                                        </li>
-                                    {% endfor %}
-                                    <!-- <li>
-                                        <label for="orange">
-                                            <input type="radio" name="color" id="orange" checked>
-                                            <span class="color-box color-box--orange"></span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label for="violet">
-                                            <input type="radio" name="color" id="violet">
-                                            <span class="color-box color-box--violet"></span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label for="pink">
-                                            <input type="radio" name="color" id="pink">
-                                            <span class="color-box color-box--pink"></span>
-                                        </label>
-                                    </li> -->
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="list-item">
-                            <div class="left">QTY</div>
-                            <div class="right">
-                                <div class="product-quantity">
-                                    <div class="num-block skin-2">
-                                        <div class="num-in">
-                                            <span class="minus dis"></span>
-                                            <label for="quan-1" class="visually-hidden"></label>
-                                            <input id="quan-1" type="text" class="in-num" value="1" readonly="">
-                                            <span class="plus"></span>
+
+                   
+                        <ul class="product-variable-lists">
+
+
+                             {% if single_product.variation_set.exists %}
+
+                               {% if single_product.variation_set.sizes.exists %}
+                                <li class="list-item">
+                                    <div class="left">Size</div>
+                                    <div class="right">
+                                        <ul class="size-chart inner-child-item">
+                                            {% for i in single_product.variation_set.sizes %}
+                                                {{size}}
+                                                <li> 
+                                                    <label for="{{i.variation_value}}">
+                                                        <input type="radio" name="size" required value="{{i.variation_value}}" id="{{i.variation_value}}"   {% if forloop.first %} checked {% endif %} >
+                                                        <span class="size-text">{{i.variation_value | upper }}</span>
+                                                    </label>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </li>
+                                {% endif %}
+
+                                {% if single_product.variation_set.colors.exists %}
+                                <li class="list-item">
+                                    <div class="left">Color</div>
+                                    <div class="right">
+                                        <ul class="color-chart inner-child-item">
+                                        
+                                            {% for i in single_product.variation_set.colors %}
+                                                <li>
+                                                    <label for="{{i.variation_value}}">
+                                                        <input type="radio" name="color" required value="{{i.variation_value}}" id="{{i.variation_value}}" 
+                                                            {% if forloop.first %} checked {% endif %}
+                                                        >
+                                                        <span class="color-box color-box--blue"  style="background-color: {{i.variation_value}};box-shadow: 0px 0px 1px 1px rgba(0,0,0, 0.3)"></span>
+                                                    </label>
+                                                </li>
+                                            {% endfor %}
+                                            <!-- <li>
+                                                <label for="orange">
+                                                    <input type="radio" name="color" id="orange" checked>
+                                                    <span class="color-box color-box--orange"></span>
+                                                </label>
+                                            </li>
+                                            <li>
+                                                <label for="violet">
+                                                    <input type="radio" name="color" id="violet">
+                                                    <span class="color-box color-box--violet"></span>
+                                                </label>
+                                            </li>
+                                            <li>
+                                                <label for="pink">
+                                                    <input type="radio" name="color" id="pink">
+                                                    <span class="color-box color-box--pink"></span>
+                                                </label>
+                                            </li> -->
+                                        </ul>
+                                    </div>
+                                </li>
+                                {% endif %}
+                            {% endif %}
+
+
+
+                            {% if single_product.stock > 0 %}
+                                <li class="list-item">
+                                    <div class="left">QTY</div>
+                                    <div class="right">
+                                        <div class="product-quantity">
+                                            <div class="num-block skin-2">
+                                                <div class="num-in">
+                                                    <span class="minus dis"></span>
+                                                    <label for="quan-1" class="visually-hidden"></label>
+                                                    <input id="quan-1" type="text" class="in-num" value="1" min="1" max="{{single_product.stock}}" readonly="">
+                                                    <span class="plus"></span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-
+                                </li>
+                            
+                        </ul>
+                    {% endif %}
                     <p class="text">
                        {{ single_product.description  }}
                     </p>
 
                     <div class="price-n-cart">
                         <span class="price">${{ single_product.price }}</span>
-                        {% if single_product.price > 0 %}
+                        {% if single_product.stock > 0 %}
                             <!-- 
                                 <a href="{% url 'cart' %}"  class="btn cart" style="background-color: rgb(3, 238, 3);">
                                   <span class="icon"><i class="fa-regular fa-eye"></i></span>View on Cart
@@ -223,6 +210,9 @@
 
 
     <script>
+        
+
+
         function filterFunction(that, event) {
             let container, input, filter, li, input_val;
             container = $(that).closest(".searchable");

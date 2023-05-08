@@ -29,7 +29,12 @@
                                     <li class="list-item">
                                         <span class="notch-bg notch-bg--emerald"></span>
                                         <a href="#profile-menu-offcanvas" area-label="User" class="btn btn--size-33-33 btn--center btn--round offcanvas-toggle offside-menu">
-                                            <img class="img-fluid" height="33" width="33" src="{% static 'assets/images/header-top-user-img.jpg' %}" alt="user image"></a>
+                                            {% if user.profile_pic %}
+                                                    <img class="img-fluid" src="{{ user.profile_pic }}" alt="" height="33" width="33">
+                                            {% else %}
+                                                <img class="img-fluid" src="{% static 'assets/images/user/user-profile.png' %}" alt="" height="33" width="33">
+                                            {% endif %}
+                                        </a>
                                     </li>
                                 </ul>
                             </li>

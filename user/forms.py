@@ -1,5 +1,5 @@
 from django import forms
-from user.models import User
+from user.models import User,UserProfile
 # from django.contrib.auth.models import User
 class RegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput(attrs={
@@ -34,3 +34,33 @@ class RegistrationForm(forms.ModelForm):
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-control'
             
+
+class UserForm(forms.ModelForm): 
+    class Meta:
+        model = User
+        fields = ('name','email', 'phone')
+
+    def __init__(self, *args, **kwargs):
+        super(UserForm, self).__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs['placeholder'] = 'Enter name'
+        self.fields['email'].widget.attrs['placeholder'] = 'Enter email'
+        self.fields['phone'].widget.attrs['placeholder'] = 'Enter phone'
+        
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
+
+class UserProfileForm(forms.ModelForm):
+    profile_picture = forms.ImageField(required=False, error_messages = {'invalid':("Image files only")}, widget=forms.FileInput)
+    class Meta:
+        model = UserProfile
+        fields = ('address_line_1', 'address_line_2', 'city', 'state', 'country', 'profile_picture')
+
+    def __init__(self, *args, **kwargs):
+        super(UserProfileForm, self).__init__(*args, **kwargs)
+        self.fields['address_line_1'].widget.attrs['placeholder'] = 'Enter address_line_1'
+        self.fields['address_line_2'].widget.attrs['placeholder'] = 'Enter address_line_2'
+        self.fields['city'].widget.attrs['placeholder'] = 'Enter city'
+        self.fields['state'].widget.attrs['placeholder'] = 'Enter state'
+        self.fields['country'].widget.attrs['placeholder'] = 'Enter country'
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'

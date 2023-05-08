@@ -63,6 +63,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'category.context_processors.menu_links',
                 'cart.context_processors.counter',
+                'checkout.context_processors.total_order_price'
             ],
         },
     },

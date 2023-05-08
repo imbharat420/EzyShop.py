@@ -24,3 +24,14 @@ class CartItem(models.Model):
 
     def __str_(self):
         return self.product
+    
+
+class Wishlist(models.Model):
+    user = models.ForeignKey(User,null=True,on_delete=models.CASCADE)
+    product = models.ForeignKey(Product,on_delete=models.CASCADE)  
+    date_added = models.DateField(auto_now_add=True)
+    def sub_total(self):
+        return self.product.price * self.quantity
+    
+    def __str_(self):
+        return self.product

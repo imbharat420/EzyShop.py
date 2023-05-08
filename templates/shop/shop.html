@@ -2,7 +2,7 @@
 {% load static %}
 
 
-{% block title %} | Welcome {% endblock %}
+{% block title %} | Shop {% endblock %}
 {% block content %}
 
 
@@ -59,19 +59,25 @@
                         {% endfor %}
          
                     </div>
-                    <div class="banner-bg my-30">
-                        <div class="image">
-                            <a href="shop-1.html" class=""><img class="img-full" width="388" height="130" src="{% static 'assets/images/banner/banner-1.png' %}" alt="image"></a>
-                        </div>
-                        <div class="content">
-                            <h2 class="title">Luxury Decoration <br> <span>30% Off</span></h2>
-                            <a href="shop-1.html">More</a>
-                        </div>
-                    </div>
-                    <div class="catagories-wrapper-content">
+                    {% if banners %}
+                        {% for banner in banners %}
+                            <div class="banner-bg my-30">
+                                <div class="image">
+                                    <a href="{{ banner.category.get_url }}" class=""><img class="img-full" width="388" height="130" src="{{ banner.banner_image.url }}" alt="{{ banner.banner_alt}}"></a>
+                                </div>
+                                <div class="content">
+                                    <h2 class="title">{{ banner.banner_title }} <br> <span>{{ banner.banner_subtitle }}</span></h2>
+                                    <a href="{{ banner.banner_url.get_url }}">More</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    
+                    <!-- <div class="catagories-wrapper-content"> -->
 
                         <!-- Start Product Single Item -->
-                        <div class="single-product-item product-item--style-3">
+                        <!-- <div class="single-product-item product-item--style-3">
                             <div class="image">
                                 <a href="single-product.html">
                                     <img width="140" height="110" class="img-fluid" src="assets/images/product/normal/product-3-img-5.png" alt="image">
@@ -87,49 +93,12 @@
                                     <span class="review-star-text">4.5</span>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- ENd Product Single Item -->
-                        <!-- Start Product Single Item -->
-                        <div class="single-product-item product-item--style-3">
-                            <div class="image">
-                                <a href="single-product.html">
-                                    <img width="140" height="110" class="img-fluid" src="assets/images/product/normal/product-3-img-2.png" alt="image">
-                                </a>
-                                <a href="wishlist.html" aria-label="Wishlist" class="btn btn--size-33-33 btn--center btn--round btn--color-radical-red btn--bg-white btn--box-shadow"><i class="icon icon-carce-heart"></i></a>
-                            </div>
-                            <div class="content">
-                                <div class="content--left">
-                                    <a href="single-product.html" class="title">Hotil Office</a>
-                                    <span class="price">$500.00</span>
-                                </div>
-                                <div class="content--right">
-                                    <span class="review-star-text">4.5</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- ENd Product Single Item -->
-                        <!-- Start Product Single Item -->
-                        <div class="single-product-item product-item--style-3">
-                            <div class="image">
-                                <a href="single-product.html">
-                                    <img width="120" height="96" class="img-fluid" src="assets/images/product/normal/product-3-img-6.png" alt="image">
-                                </a>
-                                <a href="wishlist.html" aria-label="Wishlist" class="btn btn--size-33-33 btn--center btn--round btn--color-radical-red btn--bg-white btn--box-shadow"><i class="icon icon-carce-heart"></i></a>
-                            </div>
-                            <div class="content">
-                                <div class="content--left">
-                                    <a href="single-product.html" class="title">Drawing room</a>
-                                    <span class="price">$500.00</span>
-                                </div>
-                                <div class="content--right">
-                                    <span class="review-star-text">4.5</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- ENd Product Single Item -->
+                     
 
-                    </div>
-                    <button class="load-more-btn">load more</button>
+                    <!-- </div> -->
+                    <!-- <button class="load-more-btn">load more</button> -->
                 </div>
             </div>
         </div>

@@ -4,12 +4,30 @@ from django.contrib.auth.decorators import login_required
 import datetime
 from django.http import HttpResponse,JsonResponse
 from cart.models import CartItem,Cart
-from .models import Order,Payment
+from .models import Order,Payment,OrderProduct
+from shop.models import Product
 from .forms import OrderForm
 # _cart_id
 from cart.views import _cart_id
 from django.core.exceptions import ObjectDoesNotExist
 import json
+
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import EmailMessage
+# config
+from decouple import config
+
+
+
+import sendgrid
+from sendgrid.helpers.mail import Mail, Email, To
+import requests
+from django.conf import settings
+
 
 # Create your views here.
 @login_required(login_url='login')
@@ -39,18 +57,15 @@ def checkout(request,total=0, quantity=0, cart_items=None):
     }
     return render(request, 'checkout/checkout.html',context)
 
+
+
+@login_required(login_url='login')
 def order(request):
-    return render(request, 'checkout/order.html')
-
-
-
-
-
-
-
-
-
-
+    orderproducts = OrderProduct.objects.filter(user=request.user, ordered=True).order_by('-created_at')
+    context = {
+        'orderproducts': orderproducts,
+    }
+    return render(request, 'checkout/order.html', context)
 
 
 
@@ -76,7 +91,61 @@ def payments(request):
     order.payment = payment
     order.is_ordered = True
     order.save()
-    return JsonResponse('Payment submitted..', safe=False)
+
+
+    cart_items = CartItem.objects.filter(user=request.user)
+
+    for item in cart_items:
+        orderproduct = OrderProduct()
+        orderproduct.order_id = order.id 
+        orderproduct.payment = payment
+        orderproduct.user = request.user
+        orderproduct.product_id = item.product_id
+        orderproduct.quantity = item.quantity
+        orderproduct.product_price = item.product.price
+        orderproduct.ordered = True
+        orderproduct.save()
+    
+        cart_item = CartItem.objects.get(id=item.id)
+        product_variation = cart_item.variations.all()
+        orderproduct = OrderProduct.objects.get(id=orderproduct.id)
+        orderproduct.variations.set(product_variation)
+        orderproduct.save()
+
+        # Reduce stock when order is placed or saved
+        product = Product.objects.get(id=item.product_id)
+        product.stock -= item.quantity
+        product.save()
+
+    # Clear cart
+    CartItem.objects.filter(user=request.user).delete()
+    Cart.objects.filter(cart_id=_cart_id(request)).delete()
+
+    # Send order received email to customer
+    mail_subject = 'Thank you for your order!'
+    message = render_to_string('checkout/order_recieved_email.html', {
+        'user': request.user,
+        'order': order,
+    })
+    
+    from_email = Email(config('FROM_EMAIL'))
+    to_email = To(request.user.email)
+    subject = mail_subject
+
+    
+    content = Mail(from_email, to_email, subject, message)
+    sg = sendgrid.SendGridAPIClient(api_key=config('EMAIL_HOST_PASSWORD'))
+    
+    sg.send(content)
+
+
+    data = {
+        'order_number': order.order_number,
+        'transID': payment.payment_id,
+    }
+
+
+    return JsonResponse(data)
     # return JsonResponse('Payment submitted..', safe=False)
 
 
@@ -143,3 +212,32 @@ def place_order(request,total=0, quantity=0):
     
 
    
+def order_complete(request):
+    order_number = request.GET.get('order_number')
+    transID = request.GET.get('payment_id')
+
+    try:
+        order = Order.objects.get(order_number=order_number, is_ordered=True)
+        ordered_products = OrderProduct.objects.filter(order_id=order.id)
+
+        subtotal = 0
+        for i in ordered_products:
+            subtotal += i.product_price * i.quantity
+
+        payment = Payment.objects.get(payment_id=transID)
+
+        context = {
+            'order': order,
+            'ordered_products': ordered_products,
+            'order_number': order.order_number,
+            'transID': payment.payment_id,
+            'payment': payment,
+            'subtotal': subtotal,
+        }
+        return render(request, 'checkout/order_complete.html', context)
+    except (Payment.DoesNotExist, Order.DoesNotExist):
+        return redirect('home') 
+    
+
+
+

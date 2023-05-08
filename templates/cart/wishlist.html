@@ -11,85 +11,42 @@
         <div class="cart-section section-gap-top-30">
             <div class="container">
                 <div class="cart-items-wrapper">
-                    <ul class="cart-item-list">
-                        <!-- Start Single Cart Item -->
-                        <li class="single-cart-item">
-                            <div class="image">
-                                <img width="90" height="90" src="assets/images/product/small/product-1-small-1.png" alt="">
-                            </div>
+
+                  <div class="product-wrapper">
+                    <div class="product-wrapper-content--4">
+
+                        {% if wishlist %}
+                            {% for item in wishlist %}
+                        <!-- Start Product Single Item -->
+                        <div 
+                             {% if forloop.first %} id="single-product-item" {% endif %}      
+                            class="single-product-item product-item--style-4">
+                            <a aria-label="Product Image" href="{{item.product.get_url}}"" class="image">
+                                <img width="90" height="90" class="img-fluid" src="{{item.product.images.url}}" alt="">
+                            </a>
                             <div class="content">
-                                <a href="single-product.html" class="title">Cat sports mans shoe</a>
-                                <div class="details">
-                                    <div class="left">
-                                        <span class="brand">Rebook</span>
-                                        <span class="price">$500.00</span>
-                                    </div>
-                                    <div class="right">
-                                        <a href="cart.html" class="btn btn--default btn--radius btn--color-white btn--radical-red">Add to cart</a>
-                                    </div>
+                                <div class="content--left">
+                                    <a href="{{item.product.get_url}}" class="title"><strong>{{item.product.product_name}}</strong></a>
+                                    <p>{{item.product.description}}</p>
+                                </div>
+                                <div class="right">
+                                    <a href="{{item.product.get_url}}" class="btn btn--default btn--radius btn--color-white btn--radical-red">Add to cart</a>
                                 </div>
                             </div>
-                        </li>
-                        <!-- End Single Cart Item -->
-                        <!-- Start Single Cart Item -->
-                        <li class="single-cart-item">
-                            <div class="image">
-                                <img width="90" height="90" src="assets/images/product/small/product-1-small-2.png" alt="">
-                            </div>
-                            <div class="content">
-                                <a href="single-product.html" class="title">Nikka sports mans shoe</a>
-                                <div class="details">
-                                    <div class="left">
-                                        <span class="brand">Nikka</span>
-                                        <span class="price">$450.00</span>
-                                    </div>
-                                    <div class="right">
-                                        <a href="cart.html" class="btn btn--default btn--radius btn--color-white btn--radical-red">Add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <!-- End Single Cart Item -->
-                        <!-- Start Single Cart Item -->
-                        <li class="single-cart-item">
-                            <div class="image">
-                                <img width="90" height="90" src="assets/images/product/small/product-1-small-3.png" alt="">
-                            </div>
-                            <div class="content">
-                                <a href="single-product.html" class="title">Adur sports shoe</a>
-                                <div class="details">
-                                    <div class="left">
-                                        <span class="brand">Rebook</span>
-                                        <span class="price">$399.00</span>
-                                    </div>
-                                    <div class="right">
-                                        <a href="cart.html" class="btn btn--default btn--radius btn--color-white btn--radical-red">Add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <!-- End Single Cart Item -->
-                        <!-- Start Single Cart Item -->
-                        <li class="single-cart-item">
-                            <div class="image">
-                                <img width="90" height="90" src="assets/images/product/small/product-1-small-4.png" alt="">
-                            </div>
-                            <div class="content">
-                                <a href="single-product.html" class="title">Fnik sports mans shoe</a>
-                                <div class="details">
-                                    <div class="left">
-                                        <span class="brand">Rebook</span>
-                                        <span class="price">$410.00</span>
-                                    </div>
-                                    <div class="right">
-                                        <a href="cart.html" class="btn btn--default btn--radius btn--color-white btn--radical-red">Add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <!-- End Single Cart Item -->
-                    </ul>
-                    <button class="load-more-btn">load more</button>
+                            <a href="{% url 'remove_wishlist_item' item.product.id %}" aria-label="Cart" class="cart-link"><i
+									class="icon icon-carce-x-circle"></i></a>
+                        </div>
+                        <!-- ENd Product Single Item -->
+                         {% endfor %}
+                      {% else %}
+                            <p>No items in your wishlist</p>
+                      {% endif %}
+
+                    </div>
+                    <!-- <button class="load-more-btn">load
+                        more</button> -->
+                </div>
+                    <!-- <button class="load-more-btn">load more</button> -->
                 </div>
             </div>
         </div>
@@ -100,5 +57,14 @@
         <footer class="footer-section"></footer>
     </main>
 
+    <script>
+        window.addEventListener("load", function() {
+            document.querySelector("#single-product-item").classList.add("active");
 
+            setTimeout(() => {
+              document.querySelector("#single-product-item").classList.remove("active");
+            }, 1000);
+        });
+       
+    </script>
 {% endblock %}s

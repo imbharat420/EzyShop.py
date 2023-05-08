@@ -2,7 +2,7 @@
 {% load static %}
 
 
-{% block title %} | Welcome {% endblock %}
+{% block title %} Categories {% endblock %}
 {% block content %}
     <main class="main-wrapper">
 
@@ -12,7 +12,7 @@
                 <!-- Start Search & Filter Area -->
                 <div class="search-n-filter-area">
                     <div class="search-box">
-                        <a href="{% url 'home'}" aria-label="Filter Icon" class="filter_btn btn--radius btn--bg-white btn--box-shadow btn--size-40-40 filter-back-btn">
+                        <a href="{% url 'home' %}" aria-label="Filter Icon" class="filter_btn btn--radius btn--bg-white btn--box-shadow btn--size-40-40 filter-back-btn">
 
                             <svg xmlns="http://www.w3.org/2000/svg" width="5.973" height="10.449" viewBox="0 0 5.973 10.449">
                                 <path id="Icon_ionic-ios-arrow-back" data-name="Icon ionic-ios-arrow-back" d="M13.051,11.417,17,7.466a.747.747,0,0,0-1.058-1.054l-4.479,4.476a.745.745,0,0,0-.022,1.03l4.5,4.507A.747.747,0,1,0,17,15.37Z" transform="translate(-11.251 -6.194)" />
@@ -42,116 +42,11 @@
 
                         </div>
 
-                        <button id="filter-trigger" aria-label="Filter Icon" class="filter_btn btn--radius btn--radical-red btn--color-white btn--box-shadow btn--size-40-40 btn--center btn--font-size-22"><i
-								class="icon icon-carce-filter"></i></button>
                     </div>
                 </div>
                 <!-- End Search & Filter Area -->
 
-                <div class="shop-filter" id="shop-filter-menu">
-                    <div class="container">
-                        <div class="row">
-                            <form action="" method="GET">
-                            <div class="col-12">
-                                <div class="shop-filter-block mt-0">
-                                    <h4 class="shop-filter-block__title">Price</h4>
-                                    <div class="shop-filter-block__content">
-                                        <div class="widget-price-range">
-                                            <input type="text" id="price-range-slider" value="10">
-                                        </div>
-                                    </div>
-                                </div>
-                                <ul class="product-variable-lists">
-                                    <li class="list-item">
-                                        <div class="left">Size</div>
-                                        <div class="right">
-                                            <ul class="size-chart inner-child-item">
-                                                <li>
-                                                    <label for="samll">
-                                                        <input type="radio" name="size" value="s"  id="samll" checked="">
-                                                        <span class="size-text">S</span>
-                                                    </label>
-                                                </li>
-                                                <!-- <li>
-                                                    <label for="medium">
-                                                        <input type="radio" name="size" id="medium">
-                                                        <span class="size-text">M</span>
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <label for="large">
-                                                        <input type="radio" name="size" id="large">
-                                                        <span class="size-text">L</span>
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <label for="xlarge">
-                                                        <input type="radio" name="size" id="xlarge">
-                                                        <span class="size-text">XL</span>
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <label for="xxlarge">
-                                                        <input type="radio" name="size" id="xxlarge">
-                                                        <span class="size-text">XXL</span>
-                                                    </label>
-                                                </li> -->
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li class="list-item">
-                                        <div class="left">Color</div>
-                                        <div class="right">
-                                            <ul class="color-chart inner-child-item">
-                                                <li>
-                                                    <label for="blue">
-                                                        <input type="radio" name="color" value="blue" id="blue">
-                                                        <span class="color-box color-box--blue"></span>
-                                                    </label>
-                                                </li>
-                                                <!-- <li>
-                                                    <label for="orange">
-                                                        <input type="radio" name="color" id="orange" checked="">
-                                                        <span class="color-box color-box--orange"></span>
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <label for="violet">
-                                                        <input type="radio" name="color" id="violet">
-                                                        <span class="color-box color-box--violet"></span>
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <label for="pink">
-                                                        <input type="radio" name="color" id="pink">
-                                                        <span class="color-box color-box--pink"></span>
-                                                    </label>
-                                                </li> -->
-                                            </ul>
-                                        </div>
-                                    </li>
-
-                                </ul>
-                                <!-- <div class="shop-filter-block">
-                                    <h4 class="shop-filter-block__title">Brand</h4>
-                                    <div class="shop-filter-block__content">
-                                        <ul class="shop-filter-block__brand">
-                                            <li><button>HasThemes</button></li>
-                                            <li><button class="active">HasTech</button></li>
-                                            <li><button>Bootxperts</button></li>
-                                            <li><button>Codecarnival</button></li>
-                                        </ul>
-                                    </div>
-                                </div> -->
-                                <div class="shop-filter-block">
-                                    <button class="apply-btn" type="submit">APPLY</button>
-                                    <a class="cancel-btn" id="filter-close" onclick="javascript:void(0)">CANCEL</a>
-                                </div>
-                            </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+               
             </div>
         </div>
         <!-- ...:::End Search & Filter Section:::... -->
@@ -173,45 +68,7 @@
                                         </a>
                                     </div>
                                 {% endfor %}
-                                <!-- Slides -->
-                                <!-- <div class="swiper-slide">
-                                    <a href="single-product.html" class="btn">All</a>
-                                </div>
-                                <div class="swiper-slide">
-                                    <a href="single-product.html" class="btn">
-                                        <img width="24" height="13" src="assets/images/catagories/shoe.png" alt="image">
-                                    </a>
-                                </div>
-                                <div class="swiper-slide">
-                                    <a href="single-product.html" class="btn">
-                                        <img width="22" height="20" src="assets/images/catagories/casual-t-shirt.png" alt="image">
-                                    </a>
-                                </div>
-                                <div class="swiper-slide">
-                                    <a href="single-product.html" class="btn">
-                                        <img width="16" height="20" src="assets/images/catagories/strapless.png" alt="image">
-                                    </a>
-                                </div>
-                                <div class="swiper-slide">
-                                    <a href="single-product.html" class="btn">
-                                        <img width="9" height="20" src="assets/images/catagories/trousers.png" alt="image">
-                                    </a>
-                                </div>
-                                <div class="swiper-slide">
-                                    <a href="single-product.html" class="btn">
-                                        <img width="17" height="20" src="assets/images/catagories/bag-pack.png" alt="image">
-                                    </a>
-                                </div>
-                                <div class="swiper-slide">
-                                    <a href="single-product.html" class="btn">
-                                        <img width="22" height="20" src="assets/images/catagories/casual-t-shirt.png" alt="image">
-                                    </a>
-                                </div>
-                                <div class="swiper-slide">
-                                    <a href="single-product.html" class="btn">
-                                        <img width="24" height="13" src="assets/images/catagories/shoe.png" alt="image">
-                                    </a>
-                                </div> -->
+
                             </div>
                         </div>
                     </div>
