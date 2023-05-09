@@ -7,12 +7,13 @@ from django.db.models import Q
 
 def shop(request,category_slug=None):
     categories = None
+    category = None
     products = None 
     banners = None
     categories = Category.objects.all()
     if category_slug != None:
-        categories = get_object_or_404(Category,slug=category_slug)
-        products = Product.objects.filter(category=categories,is_available=True)
+        category = get_object_or_404(Category,slug=category_slug)
+        products = Product.objects.filter(category=category,is_available=True)
         products_count = products.count()
     else:
         products = Product.objects.all().filter(is_available=True)
@@ -20,7 +21,7 @@ def shop(request,category_slug=None):
 
     # banner_by_category
     try:
-        banners = Banner.objects.filter(category=categories,is_active=True)
+        banners = Banner.objects.filter(category=category,is_active=True)
     except Exception as e:
         pass 
 
@@ -29,6 +30,7 @@ def shop(request,category_slug=None):
         'categories':categories,
         "total": products_count,
         "banners":banners,
+        "category":category,
     }
     return render(request, 'shop/shop.html',context)
 

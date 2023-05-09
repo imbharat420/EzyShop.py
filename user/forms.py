@@ -1,5 +1,5 @@
 from django import forms
-from user.models import User,UserProfile
+from .models import User,UserProfile
 # from django.contrib.auth.models import User
 class RegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput(attrs={
@@ -12,7 +12,7 @@ class RegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['name','username', 'email','phone', 'username', 'password']
+        fields = ['name','username','phone', 'username', 'password']
     def clean(self):
         cleaned_data = super(RegistrationForm, self).clean()
         if User.objects.filter(username=cleaned_data["username"]).exists():
@@ -64,3 +64,5 @@ class UserProfileForm(forms.ModelForm):
         self.fields['country'].widget.attrs['placeholder'] = 'Enter country'
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-control'
+        self.fields['profile_picture'].widget.attrs['class'] = 'upload-file'
+        self.fields['profile_picture'].widget.attrs['id'] = 'file'

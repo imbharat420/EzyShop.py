@@ -4,7 +4,49 @@
 
 {% block title %} Setting {% endblock %}
 {% block content %}
+
+
+
     <main class="main-wrapper overflow-x-hidden">
+        <div class="alert-container" style="z-index: 999;">
+            {% for field in user_form %}
+            {% if field.errors %}
+                <div class="alert alert-error">
+                    <span class="icon-container">
+                    <span class="icon-wrapper">
+                        <i class="fa-solid fa-circle-exclamation type-icon"></i>
+                    </span>
+                    </span>
+                        <p class="text">
+                        
+                        {{ field.label }}: {{ field.errors|join:", " }}
+                    
+                        </p>
+                        <span class="dismiss">
+                        <i class="fa-solid fa-xmark"></i>
+                    </span>
+            </div>
+
+                 <script>
+                    var alerts = document.querySelectorAll('.alert');
+                    alerts.forEach(alert => {
+                        const dismiss = alert.querySelector('.dismiss');
+                        if (dismiss) {
+                        dismiss.addEventListener('click', function(e){
+                            dismiss.parentNode.remove();
+                        });
+
+                        alerts.forEach(alert => {
+                            setTimeout(function(){
+                            alert.remove();
+                            }, 5000);
+                        });
+                        }
+                    });
+                    </script>
+                {% endif %}
+        {% endfor %}
+     </div>
 
 
         <!-- ...:::Start Contact Section:::... -->
@@ -16,20 +58,22 @@
                 <div class="profile-card-section section-gap-top-25">
                     <div class="profile-card-wrapper">
                         <div class="image">
+                            <div id="image">
                             {% if userprofile.profile_picture %}
                                 {% if userprofile.profile_picture.url %}
-                                    <img class="img-fluid" src="{{ userprofile.profile_picture.url }}" alt="" width="96" height="96">
+                                    <img class="img-fluid" id="profile-pic" src="{{ userprofile.profile_picture.url }}" alt="" width="96" height="96">
                                 {% else %}
-                                    <img class="img-fluid" src="{% static 'assets/images/user/user-profile.png' %}" alt="" width="96" height="96">
+                                    <img class="img-fluid" id="profile-pic" src="{% static 'assets/images/user/user-profile.png' %}" alt="" width="96" height="96">
                                 {% endif %}
                             {% else %}
-                                <img class="img-fluid" src="{% static 'assets/images/user/user-profile.png' %}" alt="" width="96" height="96">
+                                <img class="img-fluid" id="profile-pic" src="{% static 'assets/images/user/user-profile.png' %}" alt="" width="96" height="96">
                             {% endif %}
-
+                            </div>
                             <label class="upload-image-label" for="file">
                                 <i class="icon icon-carce-camera"></i>
                             </label>
-                            <input class="upload-file" id="file" type="file" name="profile_picture">
+                            <!-- <input class="upload-file" id="file" type="file" name="profile_picture" accept="image/png, image/gif, image/jpeg, image/jpg, image/webp" > -->
+                            {{profile_form.profile_picture}}
                         </div>
                         <div class="content">
                             <h2 class="setting-name">{{ user.name | upper}}</h2>
@@ -51,47 +95,47 @@
                                 {{user_form.name}}
                                 <span class="icon"><i class="icon icon-carce-user"></i></span>
                             </li>
-                            <!-- <li class="single-form-item">
+                            <li class="single-form-item">
                                 <label for="email" class="visually-hidden">Email</label>
                                 {{user_form.email}}
                                 <span class="icon"><i class="icon icon icon-carce-mail"></i></span>
-                            </li> -->
+                            </li>
                             <li class="single-form-item">
                                 <label for="number" class="visually-hidden">Phone</label>
                                 {{user_form.phone}}
-                                <span class="icon"><i class="icon icon-carce-phone"></i></span>
+                                <span class="icon"><i class="fa-solid fa-phone"></i></span>
                             </li>
                             <li class="single-form-item">
                                 <label for="address_line_1" class="visually-hidden">address_line_1</label>
                                 {{profile_form.address_line_1}}
-                                <span class="icon"><i class="icon icon-carce-user"></i></span>
+                                <span class="icon"><i class="fa-sharp fa-solid fa-location-dot"></i></span>
                             </li>
                             <li class="single-form-item">
                                 <label for="address_line_2" class="visually-hidden">address_line_2</label>
                                 {{profile_form.address_line_2}}
-                                <span class="icon"><i class="icon icon-carce-user"></i></span>
+                                <span class="icon"><i class="fa-sharp fa-solid fa-location-dot"></i></span>
                             </li>
                             <li class="single-form-item">
                                 <label for="city" class="visually-hidden">city</label>
                                  {{profile_form.city}}
-                                <span class="icon"><i class="icon icon-carce-user"></i></span>
+                                <span class="icon"><i class="fa-solid fa-city"></i></span>
                             </li>
                             <li class="single-form-item">
                                 <label for="state" class="visually-hidden">state</label>
                                 {{profile_form.state}}
-                                <span class="icon"><i class="icon icon-carce-user"></i></span>
+                                <span class="icon"><i class="fa-solid fa-map-location-dot"></i></i></span>
                             </li>
                              <li class="single-form-item">
                                 <label for="country" class="visually-hidden">country</label>
                                 {{profile_form.country}}
-                                <span class="icon"><i class="icon icon-carce-user"></i></span>
+                                <span class="icon"><i class="fa-solid fa-globe"></i></span>
                             </li>
                         </ul>
-                        </div>
                         <input type="submit" style="width:100%" class="btn btn--block btn--radius btn--size-xlarge btn--color-white btn--bg-maya-blue text-center contact-btn" />
-                    </div>
+                        </div>
                 </div>
-            </form>
+             </form>
+            </div>
         </div>
         <!-- ...:::End Contact Section:::... -->
 
@@ -125,5 +169,32 @@
 
         <footer class="footer-section"></footer>
     </main>
+    <script>
+        document.getElementById('file').addEventListener('change', function(event) {
 
+            console.log(event.target.files[0]);
+            const imagePreview = document.getElementById('image');
+            const profilePic = document.getElementById('profile-pic');
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const img = new Image();
+                    profilePic.src = e.target.result;
+                    img.style.maxWidth = '96px !important';
+                    img.style.maxHeight = '96px  !important';
+
+                    // imagePreview.innerHTML = '';
+                    // imagePreview.appendChild(img);
+                };
+
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.innerHTML = '';
+            }
+        });
+
+    </script>
   {% endblock %}

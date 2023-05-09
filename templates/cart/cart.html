@@ -101,10 +101,10 @@
 
         <!-- ...:::End Cart Section:::... -->
                 {% else %}
-                    <div style="height:100%;width:100%">
+                     <div style="display: flex;justify-content: center;align-items: center;flex-direction: column;height: 60vh;">
                         <h4 class="alert-heading">No items in cart</h4>
                         <a   href="{% url 'home' %}" class="load-more-btn">Continue Shopping</a>
-                        <p>Go to <a href="{% url 'home' %}">home page</a> and add some items to cart</p>
+                        <img src="{% static 'assets/images/empty-cart.png' %}" alt="empty-cart" style="width: 96px;margin-top: 20px;">
                     </div>
                 {% endif %}
              </div>

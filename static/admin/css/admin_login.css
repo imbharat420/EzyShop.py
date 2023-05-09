@@ -1,0 +1,76 @@
+/* General */
+body.login {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa !important;
+    color: #343a40 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.login #header{
+background-color: #ffffff !important;
+}
+
+.login #branding h1{
+    color: #000000 !important;
+     display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+/* Login Box */
+.login #container {
+    background-color: #ffffff !important;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(148, 148, 148, 0.1), 0 1px 2px rgba(0, 0, 0, 0.12);
+    width: 400px;
+    max-width: 100%;
+}
+
+.login #container h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Form */
+.login #login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.login #login-form label {
+    font-size: 0.9rem;
+    color: #000000 !important;
+}
+
+.login #login-form input {
+    padding: 10px;
+    background: #ffffff !important;
+    border: 1px solid #ced4da !important;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: #000000 !important;
+}
+
+.login #login-form input[type="submit"] {
+    background-color: #168bf2 !important;
+    border: none;
+    color: #ffffff !important;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.login #login-form input[type="submit"]:hover {
+    background-color: #1265a7 !important;
+}

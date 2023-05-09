@@ -39,7 +39,10 @@
                         <!-- ENd Product Single Item -->
                          {% endfor %}
                       {% else %}
-                            <p>No items in your wishlist</p>
+                      <div style="display: flex;justify-content: center;align-items: center;flex-direction: column;height: 60vh;">
+                            <h2 style="margin-bottom: 30px;">No items in your wishlist</h2>
+                            <img src="{% static '/assets/images/favourite.png' %}" alt="empty-cart" style="width: 96px">
+                        </div>
                       {% endif %}
 
                     </div>

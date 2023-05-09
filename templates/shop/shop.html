@@ -34,31 +34,37 @@
                     </div>
                 </div>
                 <div class="catagories-wrapper section-gap-top-25">
+                    {% if products %}
                     <div class="catagories-wrapper-content">
-
-                        {% for product in products %}
-                        <!-- Start Product Single Item -->
-                        <div class="single-product-item product-item--style-3">
-                            <div class="image">
-                                <a href="{{ product.get_url }}">
-                                    <img width="140" height="110" class="img-fluid" src="{{ product.images.url }}" alt="image">
-                                </a>
-                                <a href="{% url 'wishlist'%}" aria-label="Wishlist" class="btn btn--size-33-33 btn--center btn--round btn--color-radical-red btn--bg-white btn--box-shadow"><i class="icon icon-carce-heart"></i></a>
-                            </div>
-                            <div class="content">
-                                <div class="content--left">
-                                    <a href="{{ product.get_url }}" class="title">{{product.product_name }}</a>
-                                    <span class="price">$500.00</span>
+                            {% for product in products %}
+                            <!-- Start Product Single Item -->
+                            <div class="single-product-item product-item--style-3">
+                                <div class="image">
+                                    <a href="{{ product.get_url }}">
+                                        <img width="140" height="110" class="img-fluid" src="{{ product.images.url }}" alt="image">
+                                    </a>
+                                    <a href="{% url 'wishlist'%}" aria-label="Wishlist" class="btn btn--size-33-33 btn--center btn--round btn--color-radical-red btn--bg-white btn--box-shadow"><i class="icon icon-carce-heart"></i></a>
                                 </div>
-                                <div class="content--right">
-                                    <span class="review-star-text">4.5</span>
+                                <div class="content">
+                                    <div class="content--left">
+                                        <a href="{{ product.get_url }}" class="title">{{product.product_name }}</a>
+                                        <span class="price">$500.00</span>
+                                    </div>
+                                    <div class="content--right">
+                                        <!-- <span class="review-star-text">4.5</span> -->
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- ENd Product Single Item -->
-                        {% endfor %}
-         
+                            <!-- ENd Product Single Item -->
+                            {% endfor %}
                     </div>
+                     {% else %}
+                            <div style="display: flex;justify-content: center;align-items: center;flex-direction: column;height: 60vh;width: 100%;">
+                                <h4 class="alert-heading">No Product in {{ category }} category</h4>
+                                <a   href="{% url 'home' %}" class="load-more-btn">Continue Shopping</a>
+                                <img src="{% static 'assets/images/no-search.png' %}" alt="empty-cart" style="width: 96px;margin-top: 20px;">
+                            </div>
+                        {% endif %}
                     {% if banners %}
                         {% for banner in banners %}
                             <div class="banner-bg my-30">

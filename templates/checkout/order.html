@@ -10,8 +10,9 @@
         <div class="cart-section section-gap-top-30">
             <div class="container">
                 <div class="cart-items-wrapper">
+                    {% if orderproducts %}
                     <ul class="cart-item-list">
-
+                        
                         {% for orderproduct in orderproducts %}
                         <!-- Start Single Cart Item -->
                             <li class="single-cart-item">
@@ -39,7 +40,13 @@
                             </li>
                         <!-- End Single Cart Item -->
                         {% endfor %}
-                   
+                        {% else %}
+                        <div style="display: flex;justify-content: center;align-items: center;flex-direction: column;height: 60vh;">
+                            <!-- <a href="/" class="load-more-btn">Continue Shopping</a> -->
+                            <h2 style="margin-bottom: 30px;">No Orders Yet</h2>
+                            <img src="{% static '/assets/images/empty-cart.jpg' %}" alt="empty-cart" style="width: 96px">
+                        </div>
+                        {% endif %}
                     </ul>
                     <!-- <button class="load-more-btn">load more</button> -->
                 </div>

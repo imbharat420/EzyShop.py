@@ -165,17 +165,22 @@ def signup(request):
    
 
 
-
+@login_required(login_url='login')
 def settings(request):
     userprofile = get_object_or_404(UserProfile, user=request.user)
+    print(userprofile)
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance=request.user)
         profile_form = UserProfileForm(request.POST, request.FILES, instance=userprofile)
+        print(user_form,profile_form)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
             messages.success(request, 'Your profile has been updated.')
             return redirect('settings')
+        else:
+            print(user_form.errors,profile_form.errors)
+            # messages.error(request, 'Please correct the error below.')
     else:
         user_form = UserForm(instance=request.user)
         profile_form = UserProfileForm(instance=userprofile)
